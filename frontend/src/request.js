@@ -5,7 +5,7 @@ const history = createBrowserHistory();
 
 export function request(config) {
     const instance = axios.create({
-        baseURL: 'http://localhost:8080',
+        baseURL: 'http://localhost:8888',
         timeout: 5000
     });
 
@@ -22,8 +22,10 @@ export function request(config) {
 
     //后置拦截，对各种错误进行处理
     instance.interceptors.response.use(handle => {
+
         //服务器响应正确的数据
         if(handle.data.code === 200) {
+            console.log(handle.data); 
             return handle.data;
         }else if(handle.data.code === 6004) {
             //未登录

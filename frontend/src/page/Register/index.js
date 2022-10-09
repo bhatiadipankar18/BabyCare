@@ -17,8 +17,17 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles'
+import Select from 'react-select'
+import { request } from '../../request';
 
-// import { request } from '../../request';
+const options = [
+  { value: 'parents', label: 'parents' },
+  { value: 'nanny', label: 'nanny' }
+]
+const RoleSelectComponent = () => (
+  <Select options={options} />
+)
+
 
 
 function Copyright(props) {
@@ -26,7 +35,7 @@ function Copyright(props) {
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit">
-      暴龙战士小组
+      BabyCare
       </Link>{' '}
       {new Date().getFullYear()}
     </Typography>
@@ -57,26 +66,26 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
     const register = {
       account: data.get('account'),
-      password: data.get('password'),
-      nickName: data.get('nickName')
+      password: data.get('password')
     }
     
-    //发起注册请求
-    // request({
-    //   url: '/user/register',
-    //   method: 'POST',
-    //   data: register
-    // }).then(res => {
-    //   if (res instanceof Object) {
-    //     //如果后端返回了Token,将其保存到sessionStorage中
-    //     setOpen(false);
-    //     sessionStorage.setItem("token", res.data);
-    //     history.replace('/login');
-    //   } else {
-    //     setMsg(res);
-    //     setOpen(true);
-    //   }
-    // })
+    
+    request({
+      url: '/user/register',
+      method: 'POST',
+      data: register
+    }).then(res => {
+      if (res instanceof Object) {
+        //if got token from backend, store it in localstorage
+        setOpen(false);
+        sessionStorage.setItem("token", res.data);
+        //history.replace('/login');
+        setOpen(true);
+      } else {
+        setMsg(res);
+        setOpen(true);
+      }
+    })
 
   };
 
@@ -100,44 +109,34 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="fname"
-                  name="nickName"
-                  required
-                  fullWidth
-                  id="nickName"
-                  label="昵称"
-                  autoFocus
-                />
-              </Grid>
+    
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   id="account"
-                  label="账号"
+                  label="account"
                   name="account"
                   autoComplete="account"
                 />
               </Grid>
+           
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   name="password"
-                  label="密码"
+                  label="password"
                   type="password"
                   id="password"
                   autoComplete="new-password"
                 />
               </Grid>
+
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="注册成为Daily Life的用户😀"
-                />
+              <RoleSelectComponent></RoleSelectComponent>
               </Grid>
+         
             </Grid>
             <Button
               type="submit"
@@ -145,10 +144,10 @@ export default function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              注册
+              sign up
             </Button>
 
-             {/* 消息提醒 */}
+             {/* msg */}
              <Stack spacing={2} sx={{ width: '100%' }}>
                 <Snackbar
                   anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -165,7 +164,7 @@ export default function SignUp() {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="#" variant="body2">
-                  已经有账号了？请登录
+                  login
                 </Link>
               </Grid>
             </Grid>
