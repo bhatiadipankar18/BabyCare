@@ -25,7 +25,7 @@ export function request(config) {
 
         //服务器响应正确的数据
         if(handle.data.code === 200) {
-            console.log(handle.data); 
+            console.log(111,handle.data); 
             return handle.data;
         }else if(handle.data.code === 6004) {
             //未登录

@@ -15,12 +15,22 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     @RequestMapping(value = "/user/register",method = RequestMethod.POST)
-    public Result hello(@RequestBody Map<String, String> map ){
+    public Result register(@RequestBody Map<String, String> map ){
         //System.out.println(map.get("account") + " "+map.get("password") );
         User user=new User();
         user.setUsername(map.get("account"));
         user.setPassword(map.get("password"));
         User save = userRepository.save(user);
+        System.out.println(save);
+        return Result.success(null);
+
+    }
+
+
+    @RequestMapping(value = "/user/login",method = RequestMethod.POST)
+    public Result login(@RequestBody Map<String, String> map ){
+
+        User save = userRepository.findByUsernameAndPassword(map.get("account"),map.get("password"));
         System.out.println(save);
         return Result.success(null);
 

@@ -7,4 +7,10 @@ spring:
     username: admin
     password: woshiren211
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        hbm2ddl:
+          auto: update
 
