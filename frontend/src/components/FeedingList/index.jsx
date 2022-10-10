@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Button, Avatar, Popconfirm, Modal, Select } from "antd";
 import axios from "axios";
-import "./teacher-list.css";
-import TeacherForm from '../TeacherForm';
+import "./feeding-list.css";
+import FeedingForm from '../FeedingForm';
 import { Link } from 'react-router-dom';
 
 const {Option} = Select;
 
-export default function TeacherList(props) {
+export default function FeedingList(props) {
     // define dataSource && some states
     const [dataSource, setDataSource] = useState([]);
     const [updVal, setUpdVal] = useState([]);
@@ -54,9 +54,9 @@ export default function TeacherList(props) {
 
     /**
      * 
-     * @param {Array} arr 待更新的数组
-     * @param {Object} item arr 数组中需要更新的项
-     * @returns {Array} newArr 一个新的已被更新的数组
+     * @param {Array} arr the arr need to be updated
+     * @param {Object} item the item needed to be updated
+     * @returns {Array} newArr the array has been updated
      */ 
     
     // index data
@@ -103,7 +103,7 @@ export default function TeacherList(props) {
     const handleUpd = (value) => {
         axios.put('http://localhost:8888/feeding/update/', value)
              .then((rsp) => {
-                 // 替换原来 dataSource 中的item
+                 // replace  item in old dataSource
                  let tmpData = updArrayByItem([...dataSource], value);
                  setDataSource(tmpData);
              })
@@ -113,7 +113,7 @@ export default function TeacherList(props) {
     }
 
     const onUpdClick = index => {
-        // 处理特殊数据
+        // handle data format
         // index.department = [index.department]
         // index.joinDate = moment(index.joinDate, 'YYYY/MM')
         // index.gender = [index.gender];
@@ -207,7 +207,7 @@ export default function TeacherList(props) {
                     showSearch
                     showArrow={false}
                     filterOption={false}
-                    notFoundContent="这里嘛也没有~🙄"
+                    notFoundContent="nothing~🙄"
                     value = {searchText}
                     onSearch={onSearch}
                     onChange={onClickSearchItem}
@@ -227,7 +227,7 @@ export default function TeacherList(props) {
                 footer={[]}
                 onCancel={() => setIsAddModalVisible(false)}
             >
-                <TeacherForm  handleAdd={handleAdd} onAddSubmit={onAddSubmit} />
+                <FeedingForm  handleAdd={handleAdd} onAddSubmit={onAddSubmit} />
             </Modal>
 
             <Modal 
@@ -238,7 +238,7 @@ export default function TeacherList(props) {
                 footer={[]}
                 onCancel={() => setIsUpdModalVisible(false)}
             >
-                <TeacherForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit} />
+                <FeedingForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit} />
             </Modal>
 
             <Table
