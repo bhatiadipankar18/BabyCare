@@ -11,6 +11,7 @@ export function request(config) {
 
     //前置拦截，我们在这里统一将token设置到请求头中
     instance.interceptors.request.use(handle => {
+        console.log("我request11了！！")
         //seesionStorage中的数据当页面关闭就会消失
         const token = sessionStorage.getItem("token");
         handle.headers.Authorization = token;

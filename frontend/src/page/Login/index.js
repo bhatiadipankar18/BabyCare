@@ -70,8 +70,8 @@ export default function SignUp() {
       if (res instanceof Object) {
         //if got token from backend, store it in localstorage
         setOpen(false);
-        sessionStorage.setItem("token", res.data);
-        history.replace('/123');
+        localStorage.setItem("token", res.data);
+        history.replace('/feeding');
         setOpen(true);
       } else {
         setMsg(res);
