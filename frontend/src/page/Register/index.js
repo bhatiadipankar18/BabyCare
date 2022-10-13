@@ -1,28 +1,27 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/core/Alert';
-import Stack from '@material-ui/core/Stack'
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import { ThemeProvider, createTheme } from '@material-ui/core/styles'
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack'
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Select from 'react-select'
 import { request } from '../../request';
 
 const options = [
-  { value: 'parents', label: 'parents' },
-  { value: 'nanny', label: 'nanny' }
+  { value: '1', label: 'parents' },
+  { value: '2', label: 'nanny' }
 ]
 const RoleSelectComponent = () => (
   <Select options={options} />
@@ -52,7 +51,7 @@ export default function SignUp() {
 
   const [open, setOpen] = React.useState(false);
   const [msg, setMsg] = React.useState(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -63,13 +62,19 @@ export default function SignUp() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    //console.log(event);
     const data = new FormData(event.currentTarget);
+    console.log(data);
     const register = {
-      account: data.get('account'),
-      password: data.get('password')
+      username: data.get('username'),
+      password: data.get('password'),
+     role: data.get('select')
+
     }
-    
-    
+
+    console.log(register);
+
+
     request({
       url: '/user/register',
       method: 'POST',
@@ -78,8 +83,7 @@ export default function SignUp() {
       if (res instanceof Object) {
         //if got token from backend, store it in localstorage
         setOpen(false);
-        sessionStorage.setItem("token", res.data);
-        //history.replace('/login');
+        //sessionStorage.setItem("token", res.data);
         setOpen(true);
       } else {
         setMsg(res);
@@ -109,18 +113,18 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-    
+
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="account"
-                  label="account"
-                  name="account"
-                  autoComplete="account"
+                  id="username"
+                  label="username"
+                  name="username"
+                  autoComplete="username"
                 />
               </Grid>
-           
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -136,7 +140,7 @@ export default function SignUp() {
               <Grid item xs={12}>
               <RoleSelectComponent></RoleSelectComponent>
               </Grid>
-         
+
             </Grid>
             <Button
               type="submit"
@@ -163,7 +167,7 @@ export default function SignUp() {
 
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   login
                 </Link>
               </Grid>

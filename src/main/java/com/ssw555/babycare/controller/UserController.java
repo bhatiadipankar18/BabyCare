@@ -30,8 +30,10 @@ public class UserController {
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public Result login(@RequestBody Map<String, String> map ){
 
-        User save = userRepository.findByUsernameAndPassword(map.get("account"),map.get("password"));
-        System.out.println(save);
+        User user = userRepository.findByUsernameAndPassword(map.get("username"),map.get("password"));
+        if (user==null) {
+            return Result.fail(-1,null);
+        }
         return Result.success(null);
 
     }

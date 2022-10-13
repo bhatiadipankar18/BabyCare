@@ -1,22 +1,20 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/core/Alert';
-import Stack from '@material-ui/core/Stack'
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import { ThemeProvider, createTheme } from '@material-ui/core/styles'
+import {Snackbar} from '@mui/material';
+import  { Alert } from '@mui/material';
+import {Stack} from '@mui/material'
+import {Avatar} from '@mui/material';
+import {Button} from '@mui/material';
+import {CssBaseline} from '@mui/material';
+import {TextField} from '@mui/material';
+import {Link} from '@mui/material';
+import {Grid} from '@mui/material';
+import {Box} from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import {Typography} from '@mui/material';
+import {Container} from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material'
 import { request } from '../../request';
 
 
@@ -34,8 +32,8 @@ function Copyright(props) {
   );
 }
 
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+const AlertDom = React.forwardRef(function getAlert(props, ref) {
+  return <Alert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 const theme = createTheme();
@@ -44,7 +42,7 @@ export default function SignUp() {
 
   const [open, setOpen] = React.useState(false);
   const [msg, setMsg] = React.useState(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -57,11 +55,11 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const register = {
-      account: data.get('account'),
+      username: data.get('username'),
       password: data.get('password')
     }
-    
-    
+
+
     request({
       url: '/user/login',
       method: 'POST',
@@ -71,7 +69,7 @@ export default function SignUp() {
         //if got token from backend, store it in localstorage
         setOpen(false);
         localStorage.setItem("token", res.data);
-        history.replace('/feeding');
+        navigate('/feeding');
         setOpen(true);
       } else {
         setMsg(res);
@@ -101,18 +99,18 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-    
+
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="account"
-                  label="account"
-                  name="account"
-                  autoComplete="account"
+                  id="username"
+                  label="username"
+                  name="username"
+                  autoComplete="username"
                 />
               </Grid>
-           
+
               <Grid item xs={12}>
                 <TextField
                   required
@@ -125,8 +123,8 @@ export default function SignUp() {
                 />
               </Grid>
 
-         
-         
+
+
             </Grid>
             <Button
               type="submit"
@@ -145,16 +143,16 @@ export default function SignUp() {
                   autoHideDuration={3000}
                   onClose={handleClose}
                 >
-                  <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                  <AlertDom onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                     {msg}
-                  </Alert>
+                  </AlertDom>
                 </Snackbar>
               </Stack>
 
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
-                  login
+                <Link href="/register" variant="body2">
+                  register
                 </Link>
               </Grid>
             </Grid>

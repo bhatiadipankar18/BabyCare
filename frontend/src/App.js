@@ -1,28 +1,21 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import "antd/dist/antd.css";
-
-import Register from './page/Register'
-import Login from './page/Login'
-import Home from './page/Home'
-import Feeding from './page/Feeding'
-import NotFound from './page/NotFound'
-import FrontendAuth from "./FrontendAuth";
-import {routerMap} from "./routerMap";
+import { Routes, Route } from "react-router-dom"
+import Home from "./page/Home"
+import Home2 from "./page/Home2"
+import Login from "./page/Login"
+import Register from "./page/Register"
 
 function App() {
-  return (
-    <Router>
-      <Switch>
-        {/*<Route  exact path="/"  component={Home}/>*/}
-        {/*<Route path="/register" component={Register} />*/}
-        {/*<Route path="/login" component={Login} />*/}
-        {/*<Route path="/feeding" component={Feeding} />*/}
-        {/*<Route path="/*" component={NotFound} />*/}
-          <FrontendAuth routerConfig={routerMap}/>
-
-      </Switch>
-    </Router>
-  );
+    return (
+                <Routes>
+                    <Route path="/" element={<Home />}></Route>
+                    <Route path="/home2" element={<Home2 />}></Route>
+                    <Route path="/login" element={<Login />}></Route>
+                    <Route path="/register" element={<Register />}></Route>
+                </Routes>
+    );
 }
+
+
+
 
 export default App;

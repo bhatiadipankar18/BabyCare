@@ -1,7 +1,6 @@
 import axios from "axios";
-import {createBrowserHistory} from 'history'
+import {Navigate} from 'react-router-dom'
 
-const history = createBrowserHistory();
 
 export function request(config) {
     const instance = axios.create({
@@ -24,25 +23,29 @@ export function request(config) {
     //后置拦截，对各种错误进行处理
     instance.interceptors.response.use(handle => {
 
+
+        console.log(handle)
         //服务器响应正确的数据
         if(handle.data.code === 200) {
-            console.log(111,handle.data); 
             return handle.data;
+
+        }else if(handle.data.code === -1) {
+            return 'wrong username or password';   
         }else if(handle.data.code === 6004) {
             //未登录
-            history.push("/login");
-            history.go();
+            Navigate.push("/login");
+            Navigate.go();
         }
         else if(handle.data.code === -999) {
             //非法进入详情页
-            history.push('/login');
-            history.go();
+            Navigate.push('/login');
+            Navigate.go();
         }
         else {
             return handle.data.msg;
         }
     },error => {
-        return '连接异常';
+        return error.message;
     })
 
     return instance(config);
