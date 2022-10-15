@@ -1,7 +1,93 @@
-.not-found-page {
-    margin: 10px 0;
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-    box-shadow: 0px 2px 3px rgb(199, 199, 199);
+body{
+    font-family: 'Baloo Bhai 2', cursive;
+    color: aliceblue;
+    margin: 0px;
+    padding: 0px;
+    background: 10% url(https://images.pexels.com/photos/36029/aroni-arsa-children-little.jpg?cs=srgb&dl=pexels-pixabay-36029.jpg&fm=jpg) no-repeat 
+    
+    ;
+    background-size: 1700px;
+  }
+ 
+ .container h1{
+    text-align: center;
+}
+.formg input{
+    font-family: 'Baloo Bhai 2', cursive;
+    text-align: center;
+    display:block;
+    width: 450px;
+    padding: 6px;
+    border: 2px solid aqua;
+    margin: 13px ;
+    font-size: 25px;
+    border-radius: 18px;
+}
+.container button{
+    display:block;
+    width: 23%;
+    margin:auto;
+
+}
+.left{
+    display: inline-block;
+    /*border: 2px solid red;*/
+    position: absolute;
+    left: 34px;
+    top: 20px;
+
+}
+.left img{
+    width: 123px;
+    filter: invert(100%);
+}
+.left div{
+    text-align: center;
+    line-height: 19px;
+    font-size: 26px;
+}
+.center{
+    display: block;
+    width: 63%;
+    /*border: 2px solid blue;*/
+    margin: 29px auto;
+}
+.right{
+    position: absolute;
+    right: 34px;
+    top: 43px;
+    display: inline-block;
+    /*border: 2px solid yellow;*/
+}
+.navbar{
+    display: inline-block;
+}
+
+.navbar li{
+    display: inline-block;
+    font-size: 20px;
+}
+.navbar li a{
+    color: aliceblue;
+    text-decoration: none;
+    padding: 34px 23px;
+}
+
+.navbar li a:hover,.navbar li a.active{
+   text-decoration: underline;
+    color: salmon;
+}
+.btn{
+    font-family: 'Baloo Bhai 2', cursive;
+    margin: 5px 7px;
+    background-color:black ;
+    color: aliceblue;
+    padding: 10px 37px;
+    border: 2px solid gray;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.btn:hover{
+background-color: burlywood;
 }

@@ -14,10 +14,10 @@ export default class AppNavbar extends Component {
             isOpen: !this.state.isOpen
         });
     }
-
     render() {
-        return <Navbar color="dark" dark expand="md">
-            <NavbarBrand tag={Link} to="/">Home</NavbarBrand>
+        return <Navbar color="red" dark expand="md">
+            <NavbarBrand tag={Link} to="/">BabyCare</NavbarBrand>
         </Navbar>;
     }
+
 }
