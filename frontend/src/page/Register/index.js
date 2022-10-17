@@ -21,11 +21,14 @@ import Select from 'react-select'
 import { request } from '../../request';
 
 const options = [
-  { value: 'parents', label: 'parents' },
-  { value: 'nanny', label: 'nanny' }
+  { value: 'parents', label: 'Parents' },
+  { value: 'nanny', label: 'Nanny' }
 ]
 const RoleSelectComponent = () => (
-  <Select options={options} />
+  <Select options={options}
+          id="usertype"
+          label="usertype"
+          name="usertype" />
 )
 
 
@@ -65,8 +68,11 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const register = {
-      account: data.get('account'),
-      password: data.get('password')
+      userName: data.get('username'),
+      firstName: data.get('firstname'),
+      lastName: data.get('lastname'),
+      password: data.get('password'),
+      userType: data.get('usertype')
     }
     
     
@@ -76,14 +82,12 @@ export default function SignUp() {
       data: register
     }).then(res => {
       if (res instanceof Object) {
-        //if got token from backend, store it in localstorage
-        setOpen(false);
-        sessionStorage.setItem("token", res.data);
-        //history.replace('/login');
-        setOpen(true);
-      } else {
-        setMsg(res);
-        setOpen(true);
+        if (res.code === 1) {
+          setMsg(res.msg);
+          setOpen(true);
+        } else {
+          history.replace('/login');
+        }
       }
     })
 
@@ -114,11 +118,37 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="account"
-                  label="account"
-                  name="account"
-                  autoComplete="account"
+                  id="username"
+                  label="username"
+                  name="username"
+                  autoComplete="username"
                 />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="firstname"
+                  label="firstname"
+                  name="firstname"
+                  autoComplete="firstname"
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="lastname"
+                  label="lastname"
+                  name="lastname"
+                  autoComplete="lastname"
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+              <RoleSelectComponent></RoleSelectComponent>
               </Grid>
            
               <Grid item xs={12}>
@@ -131,10 +161,6 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                 />
-              </Grid>
-
-              <Grid item xs={12}>
-              <RoleSelectComponent></RoleSelectComponent>
               </Grid>
          
             </Grid>
@@ -163,7 +189,7 @@ export default function SignUp() {
 
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   login
                 </Link>
               </Grid>

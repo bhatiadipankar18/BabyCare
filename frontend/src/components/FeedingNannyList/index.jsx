@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { Table, Button, Avatar, Popconfirm, Modal, Select } from "antd";
 import axios from "axios";
 import "./feeding-list.css";
-import FeedingForm from '../FeedingForm';
+import FeedingNannyForm from '../FeedingNannyForm';
 import { Link } from 'react-router-dom';
 
 const {Option} = Select;
 
-export default function FeedingList(props) {
+export default function FeedingNannyList(props) {
     // define dataSource && some states
     const [dataSource, setDataSource] = useState([]);
     const [updVal, setUpdVal] = useState([]);
@@ -62,7 +62,7 @@ export default function FeedingList(props) {
     
     // index data
     useEffect(() => {
-        axios.get("http://localhost:8888/feeding/findAll")
+        axios.get("http://localhost:8888/feedingNanny/findAll")
              .then((rsp) => {
                  setDataSource(rsp.data);
              })
@@ -73,7 +73,7 @@ export default function FeedingList(props) {
 
     // CRUD -> D
     const handleDelete = (index) => {
-        axios.delete('http://localhost:8888/feeding/deleteById/' + index.id)
+        axios.delete('http://localhost:8888/feedingNanny/deleteById/' + index.id)
              .then((rsp) => {
                  let tmpData = [...dataSource];
                  let i = delFromArrayByItemElm(tmpData ,index.id);
@@ -88,7 +88,7 @@ export default function FeedingList(props) {
 
     // CRUD -> C
     const handleAdd = (value) => {
-        axios.post('http://localhost:8888/feeding/add/', value)
+        axios.post('http://localhost:8888/feedingNanny/add/', value)
              .then((rsp) => {
                 let tmpData = [...dataSource];
                 tmpData.push(rsp.data);
@@ -102,7 +102,7 @@ export default function FeedingList(props) {
 
     // CRUD -> U
     const handleUpd = (value) => {
-        axios.put('http://localhost:8888/feeding/update/', value)
+        axios.put('http://localhost:8888/feedingNanny/update/', value)
              .then((rsp) => {
                  // replace  item in old dataSource
                  let tmpData = updArrayByItem([...dataSource], value);
@@ -191,7 +191,8 @@ export default function FeedingList(props) {
                 <Button
                     type="primary"
                     onClick={() => setIsAddModalVisible(true)}
-                    style={{display: isNanny ? 'none' : 'block'}}>
+                    style={{display: isNanny ? 'none' : 'block'}}
+                    >
                     Add a row
                 </Button>
                 <Select
@@ -220,7 +221,7 @@ export default function FeedingList(props) {
                 footer={[]}
                 onCancel={() => setIsAddModalVisible(false)}
             >
-                <FeedingForm  handleAdd={handleAdd} onAddSubmit={onAddSubmit} />
+                <FeedingNannyForm  handleAdd={handleAdd} onAddSubmit={onAddSubmit} />
             </Modal>
 
             <Modal 
@@ -231,7 +232,7 @@ export default function FeedingList(props) {
                 footer={[]}
                 onCancel={() => setIsUpdModalVisible(false)}
             >
-                <FeedingForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit} />
+                <FeedingNannyForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit} />
             </Modal>
 
             <Table
