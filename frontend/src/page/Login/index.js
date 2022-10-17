@@ -57,7 +57,7 @@ export default function SignUp() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const register = {
-      account: data.get('account'),
+      userName: data.get('username'),
       password: data.get('password')
     }
     
@@ -71,6 +71,7 @@ export default function SignUp() {
         //if got token from backend, store it in localstorage
         setOpen(false);
         localStorage.setItem("token", res.data);
+        localStorage.setItem("userType", res.data.userType);
         history.replace('/feeding');
         setOpen(true);
       } else {
@@ -97,7 +98,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            login
+            Sign In
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -106,10 +107,10 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="account"
-                  label="account"
-                  name="account"
-                  autoComplete="account"
+                  id="username"
+                  label="username"
+                  name="username"
+                  autoComplete="username"
                 />
               </Grid>
            
