@@ -3,16 +3,13 @@
  */
 
 import Feeding from "./page/Feeding";
-import FeedingNanny from "./page/FeedingNanny";
 import Login from "./page/Login";
 import Register from './page/Register'
 import NotFound from './page/NotFound'
 import Home from './page/Home'
-import FeedingNannyList from "./components/FeedingNannyList";
 
 export const routerMap = [
     {path: "/feeding", name: "Feeding", component: Feeding, auth: true},
-    {path: "/feedingNanny", name: "FeedingNanny", component: FeedingNannyList, auth: true},
     {path: "/", name: "home", component: Home},
     {path: "/login", name: "Login", component: Login},
     {path: "/register", name: "Register", component: Register},
