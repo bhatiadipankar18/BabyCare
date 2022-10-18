@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 
-public class FeedingController {
+public class FeedingNannyController {
 
     @Autowired
     private FeedingNannyRepository feedingNannyRepository;
