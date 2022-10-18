@@ -25,7 +25,7 @@ public class FeedingNannyController {
 
     }
 
-    @DeleteMapping("/feeding/deleteById/{id}")
+    @DeleteMapping("/feedingNanny/deleteById/{id}")
     public void deleteById(@PathVariable("id") Integer id) {
         feedingNannyRepository.deleteById(id);
     }
