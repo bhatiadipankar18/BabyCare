@@ -5,6 +5,7 @@ import Register from './page/Register'
 import Login from './page/Login'
 import Home from './page/Home'
 import Feeding from './page/Feeding'
+import history from './page/Feeding_History'
 import NotFound from './page/NotFound'
 import FrontendAuth from "./FrontendAuth";
 import {routerMap} from "./routerMap";
