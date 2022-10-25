@@ -1,40 +1,51 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {Snackbar} from '@mui/material';
-import  { Alert } from '@mui/material';
-import {Stack} from '@mui/material'
-import {Avatar} from '@mui/material';
-import {Button} from '@mui/material';
-import {CssBaseline} from '@mui/material';
-import {TextField} from '@mui/material';
-import {Link} from '@mui/material';
-import {Grid} from '@mui/material';
-import {Box} from '@mui/material';
+import { Snackbar } from '@mui/material';
+import { Alert } from '@mui/material';
+import { Stack } from '@mui/material'
+import { Avatar } from '@mui/material';
+import { Button } from '@mui/material';
+import { CssBaseline } from '@mui/material';
+import { TextField } from '@mui/material';
+import { Link } from '@mui/material';
+import { Grid } from '@mui/material';
+import { Box } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import {Typography} from '@mui/material';
-import {Container} from '@mui/material';
+import { Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material'
 import { request } from '../../request';
 
 
-
+function Msg(props) {
+  return (
+    <Snackbar
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      open={props.open}
+      autoHideDuration={1000}
+      onClose={props.onClose}
+    >
+    <Alert onClose={props.onClose} severity="error" variant="filled" sx={{ width: '100%' }}>
+      {props.msg}
+    </Alert>
+    </Snackbar>
+  )
+}
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit">
-      BabyCare
+      <Link color="inherit" href="/">
+        BabyCare
       </Link>{' '}
       {new Date().getFullYear()}
     </Typography>
   );
 }
 
-const AlertDom = React.forwardRef(function getAlert(props, ref) {
-  return <Alert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+
 
 const theme = createTheme();
 
@@ -82,10 +93,10 @@ export default function SignUp() {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-      <CssBaseline />
+        <CssBaseline />
         <Box
           sx={{
-            marginTop: 10,
+            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -97,59 +108,40 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             login
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="username"
+              name="username"
+              autoComplete="username"
+            />
 
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="username"
-                  label="username"
-                  name="username"
-                  autoComplete="username"
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="password"
+              type="password"
+              id="password"
+              autoComplete="new-password"
+            />
 
 
 
-            </Grid>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-             login
+              login
             </Button>
-
-             {/* msg */}
-             <Stack spacing={2} sx={{ width: '100%' }}>
-                <Snackbar
-                  anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                  open={open}
-                  autoHideDuration={3000}
-                  onClose={handleClose}
-                >
-                  <AlertDom onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-                    {msg}
-                  </AlertDom>
-                </Snackbar>
-              </Stack>
-
-            <Grid container justifyContent="flex-end">
+            <Msg open={open} onClose={handleClose} msg={msg} />
+            <Grid container>
               <Grid item>
                 <Link href="/register" variant="body2">
                   register
@@ -158,7 +150,7 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
