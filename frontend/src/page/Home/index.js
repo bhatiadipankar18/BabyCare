@@ -15,7 +15,7 @@ class Home extends Component {
                     <Link to="/">home</Link>
                 </nav>
                 <nav>
-                    <Link to="/home2">home2</Link>
+                    <Link to="/Feeding">Feeding</Link>
                 </nav>
                 <nav>
                     <Link to="/login">login</Link>
