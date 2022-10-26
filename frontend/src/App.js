@@ -3,7 +3,7 @@ import Home from "./page/Home"
 import Login from "./page/Login"
 import Register from "./page/Register"
 import Feeding from "./page/Feeding"
-import "antd/dist/antd.css";
+import 'antd/dist/antd.min.css'
 
 function App() {
     return (
