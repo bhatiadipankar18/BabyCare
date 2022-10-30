@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import LoginAndSignuUp from './LoginAndSignuUp';
 import FeedingChart from './FeedingChart';
 import FeedingEntryEdit from './FeedingEntryEdit';
+import Logout from './Logout';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route exact path="/login" element={<LoginAndSignuUp/>}/>
         <Route path='/feedingchart' exact={true} element={<FeedingChart/>}/>
         <Route path='/feedingchart/:id' element={<FeedingEntryEdit/>}/>
+        <Route path='/logout' element={<Logout/>} />
       </Routes>
     </Router>
   )

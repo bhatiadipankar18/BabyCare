@@ -5,8 +5,11 @@ import com.ssw555.babycare.Entity.User;
 import com.ssw555.babycare.Repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +44,11 @@ public class UserController {
 
         if (save.isEmpty()) {
             return Result.fail(2, "User does not exists. Please register.");
+        }
+
+        //Check if password is same
+        if (!save.get(0).getPassword().equals(map.get("password"))) {
+            return Result.fail(3, "Password does not match. Please try again.");
         }
         return Result.success(save.get(0));
 

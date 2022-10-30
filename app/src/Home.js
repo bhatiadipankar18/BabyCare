@@ -11,34 +11,6 @@ const Home = () => {
   const [cookies] = useCookies(['XSRF-TOKEN']);
   const loogedInUser = localStorage.getItem("user");
 
-  const login = () => {
-    let port = (window.location.port ? ':' + window.location.port : '');
-    if (port === ':3000') {
-      port = ':8080';
-    }
-    window.location.href = `//${window.location.hostname}${port}/private`;
-  }
-
-  const register = () => {
-    let port = (window.location.port ? ':' + window.location.port : '');
-    if (port === ':3000') {
-      port = ':8080';
-    }
-    window.location.href = `//${window.location.hostname}${port}/private`;
-  }
-
-  const logout = () => {
-    fetch('/api/logout', {
-      method: 'POST', credentials: 'include',
-      headers: { 'X-XSRF-TOKEN': cookies['XSRF-TOKEN'] }
-    })
-      .then(res => res.json())
-      .then(response => {
-        window.location.href = `${response.logoutUrl}?id_token_hint=${response.idToken}`
-          + `&post_logout_redirect_uri=${window.location.origin}`;
-      });
-  }
-
   const message = loogedInUser ?
     <h2>Welcome, {loogedInUser}!</h2> :
     <p>Please login</p>;
