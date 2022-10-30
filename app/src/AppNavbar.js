@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AppNavbar = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const userType = localStorage.getItem("userType");
+  const navigate = useNavigate();
 
   return (
     isLoggedIn ?

@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class crossConfiguration implements WebMvcConfigurer {
+public class CORSConfiguration implements WebMvcConfigurer {
 
     //配置跨域问题
     @Override
