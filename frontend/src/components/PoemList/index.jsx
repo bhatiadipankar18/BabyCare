@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Button, Avatar, Popconfirm, Modal, Select } from "antd";
 import axios from "axios";
-import "./feeding-list.css";
-import FeedingForm from '../FeedingForm';
+import "./poem-list.css";
+import PoemForm from '../PoemForm';
 import { Link } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 const {Option} = Select;
 
 export default function FeedingList(props) {
+
     // define dataSource && some states
     const [dataSource, setDataSource] = useState([]);
     const [updVal, setUpdVal] = useState([]);
@@ -59,20 +61,26 @@ export default function FeedingList(props) {
      * @returns {Array} newArr the array has been updated
      */
 
+
+
+
     // index data
     useEffect(() => {
-        axios.get("http://localhost:8888/feeding/findAll")
+        const params = {
+            childId: props.childId,
+        };
+        axios.get("http://localhost:8888/poemList/findByChildId",{ params })
              .then((rsp) => {
                  setDataSource(rsp.data);
              })
              .catch((error) => {
                  console.log(error)
              })
-    }, []);
+    }, [props.childId]);
 
     // CRUD -> D
     const handleDelete = (index) => {
-        axios.delete('http://localhost:8888/feeding/deleteById/' + index.id)
+        axios.delete('http://localhost:8888/poemList/deleteById/' + index.id)
              .then((rsp) => {
                  let tmpData = [...dataSource];
                  let i = delFromArrayByItemElm(tmpData ,index.id);
@@ -87,7 +95,7 @@ export default function FeedingList(props) {
 
     // CRUD -> C
     const handleAdd = (value) => {
-        axios.post('http://localhost:8888/feeding/add/', value)
+        axios.post('http://localhost:8888/poemList/add/', value)
              .then((rsp) => {
                 let tmpData = [...dataSource];
                 tmpData.push(rsp.data);
@@ -101,7 +109,7 @@ export default function FeedingList(props) {
 
     // CRUD -> U
     const handleUpd = (value) => {
-        axios.put('http://localhost:8888/feeding/update/', value)
+        axios.put('http://localhost:8888/poemList/update/', value)
              .then((rsp) => {
                  // replace  item in old dataSource
                  let tmpData = updArrayByItem([...dataSource], value);
@@ -153,20 +161,16 @@ export default function FeedingList(props) {
         //     }
         // },
         {
-            title: 'age',
-            dataIndex: 'age',
-            key: 'age',
+            title: 'poemId',
+            dataIndex: 'id',
+            key: 'id',
         },
         {
-            title: 'milk',
-            dataIndex: 'milk',
-            key: 'milk',
+            title: 'poemName',
+            dataIndex: 'poemName',
+            key: 'poemName',
         },
-        {
-            title: 'food',
-            dataIndex: 'food',
-            key: 'food',
-        },
+
 
         {
             title: 'Operation',
@@ -194,6 +198,7 @@ export default function FeedingList(props) {
 
     return (
         <div className="teacher-list">
+
             <div className="add-search-container">
                 <Button
                     type="primary"
@@ -222,12 +227,12 @@ export default function FeedingList(props) {
             <Modal
                 style={{ display: "flex", justifyContent: "center" }}
                 destroyOnClose={true}
-                title="Add a feeding"
+                title="Add a poemmmmmm"
                 open={isAddModalVisible}
                 footer={[]}
                 onCancel={() => setIsAddModalVisible(false)}
             >
-                <FeedingForm  handleAdd={handleAdd} onAddSubmit={onAddSubmit} />
+                <PoemForm childId={props.childId} handleAdd={handleAdd} onAddSubmit={onAddSubmit} />
             </Modal>
 
             <Modal
@@ -238,7 +243,7 @@ export default function FeedingList(props) {
                 footer={[]}
                 onCancel={() => setIsUpdModalVisible(false)}
             >
-                <FeedingForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit} />
+                <PoemForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit} />
             </Modal>
 
             <Table
