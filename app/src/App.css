@@ -78,3 +78,8 @@ label {
   font-weight: 600;
   color: rgb(34, 34, 34);
 }
+
+.error {
+  text-align: center;
+  color: red;
+}

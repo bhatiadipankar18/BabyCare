@@ -10,6 +10,7 @@ const LoginAndSignuUp = () => {
   const [lastName, setLastName] = useState("");
   const [userType, setUserType] = useState("");
 
+  const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
 
   let [authMode, setAuthMode] = useState("signin");
@@ -45,7 +46,7 @@ const LoginAndSignuUp = () => {
         }),
       });
       let resJson = await res.json();
-      if (res.status === 200) {
+      if (resJson.code === 200) {
         setFirstName("");
         setLastName("");
         setEmailAddress("");
@@ -54,7 +55,7 @@ const LoginAndSignuUp = () => {
         setMessage("User created successfully");
         setAuthMode("signin");
       } else {
-        setMessage("Some error occured");
+        setErrorMessage(resJson.msg);
       }
     } catch (err) {
       console.log(err);
@@ -78,7 +79,7 @@ const LoginAndSignuUp = () => {
       });
 
       let resJson = await res.json();
-      if (res.status === 200) {
+      if (resJson.code === 200) {
         setEmailAddress("");
         setPassword("");
         setMessage("User logged in successfully");
@@ -87,7 +88,7 @@ const LoginAndSignuUp = () => {
         localStorage.setItem("userType", resJson.data.userType);
         navigate("/");
       } else {
-        setMessage("Some error occured");
+        setErrorMessage(resJson.msg);
       }
     } catch (err) {
       console.log(err);
@@ -102,7 +103,7 @@ const LoginAndSignuUp = () => {
             <h3 className="Auth-form-title">Sign In</h3>
             <div className="text-center">
               Not registered yet?{" "}
-              <span className="link-primary" onClick={changeAuthMode}>
+              <span className="link-primary" style={{cursor: 'pointer'}} onClick={changeAuthMode}>
                 Sign Up
               </span>
               </div>
@@ -126,6 +127,9 @@ const LoginAndSignuUp = () => {
                 value={password}
               />
             </div>
+            <div className="form-group mt-3">
+            {errorMessage && <div className="error"> {errorMessage} </div>}
+            </div>
             <div className="d-grid gap-2 mt-3">
               <button type="submit" className="btn btn-primary">
                 Submit
@@ -147,7 +151,7 @@ const LoginAndSignuUp = () => {
           <h3 className="Auth-form-title">Sign In</h3>
           <div className="text-center">
             Already Registered?{" "}
-            <span className="link-primary" onClick={changeAuthMode}>
+            <span className="link-primary" style={{cursor: 'pointer'}} onClick={changeAuthMode}>
               Sign In
             </span>
           </div>
@@ -201,6 +205,9 @@ const LoginAndSignuUp = () => {
               onChange={(e) => setPassword(e.target.value)}
               value={password}
             />
+          </div>
+          <div className="form-group mt-3">
+            {errorMessage && <div className="error"> {errorMessage} </div>}
           </div>
           <div className="d-grid gap-2 mt-3">
             <button type="submit" className="btn btn-primary">
