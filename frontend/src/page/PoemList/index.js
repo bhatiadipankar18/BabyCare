@@ -69,8 +69,9 @@ export default function PoemList() {
                                  }}
                                  loadOptions={loadOptions} defaultOptions />
 
+                    <PoemList2  childId={childId}/>
+
                 </Box>
-                <PoemList2  childId={childId}/>
 
             </Container>
     );
