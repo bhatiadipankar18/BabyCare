@@ -79,9 +79,10 @@ export default function SignUp() {
             data: register
         }).then(res => {
             if (res instanceof Object) {
+                console.log("res",res)
                 //if got token from backend, store it in localstorage
                 setOpen(false);
-                setUser(data);
+                setUser(res["data"]);
                 navigate("/dashboard/feeding", { replace: true });
                 setOpen(true);
             } else {

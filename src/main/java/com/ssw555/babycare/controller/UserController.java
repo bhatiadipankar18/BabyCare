@@ -6,6 +6,7 @@ import com.ssw555.babycare.Repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -29,22 +30,15 @@ public class UserController {
 
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public Result login(@RequestBody Map<String, String> map ){
-
         User user = userRepository.findByUsernameAndPassword(map.get("username"),map.get("password"));
-
-
+        Map<String, Object> data = new HashMap<>();
         if (user==null) {
-
             return Result.fail(-1,null);
         }else{
-            if(user.getRole()==1){
-                return Result.success(user.getRole());
-            } else if (user.getRole()==2) {
-                return Result.success(user.getRole());
-            }
-
+            data.put("userId",user.getId());
+            data.put("userRole",user.getRole());
+            data.put("token","tokentoken");
+            return Result.success(data);
         }
-        return Result.success(null);
-
     }
 }

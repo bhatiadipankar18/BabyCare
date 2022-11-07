@@ -15,12 +15,14 @@ import axios from "axios";
 import AsyncSelect from 'react-select/async';
 import {logDOM} from "@testing-library/react";
 import PoemList2 from '../../components/PoemList'
+import { useAuth } from "../../hooks/useAuth";
 
+let parentId;
 
 const loadOptions = (inputValue, callback) => {
 
     const params = {
-        parentId: 1,
+        parentId: parentId,
     };
     // perform a request
     const requestResults =  axios.get("http://localhost:8888/getChildrenByParentId", { params })
@@ -39,8 +41,9 @@ const loadOptions = (inputValue, callback) => {
 export default function PoemList() {
 
     const navigate = useNavigate();
-
-
+    const { user,setUser } = useAuth();
+    parentId=user["userId"];
+    console.log("parentId",parentId)
 
     const [selectedOption, setSelectedOption]=useState(null);
     const [childId, setChildId]=useState(0);
@@ -56,19 +59,10 @@ export default function PoemList() {
                     <AsyncSelect cacheOptions
                                  value={selectedOption}
                                  onChange={newValue => {
-                                     console.log(newValue.value)
                                      setSelectedOption(newValue)
                                      setChildId(newValue.value)
-                                     //return redirect(`/poemList/${newValue.value}`);
-                                     //todo return <component>
-                                     //todo router change then get component based on router
-                                     //todo return a component
-                                     //navigate(`/poemList/${newValue.value}`);
-
-
                                  }}
                                  loadOptions={loadOptions} defaultOptions />
-
                     <PoemList2  childId={childId}/>
 
                 </Box>
