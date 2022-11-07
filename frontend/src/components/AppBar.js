@@ -17,8 +17,11 @@ import { useAuth } from "../hooks/useAuth";
 export const AppBar = ({ pages }) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const navigate = useNavigate();
-    const { user, logout } = useAuth();
-
+    const { user,setUser } = useAuth();
+    const logout = () => {
+        setUser(null);
+        navigate("/", { replace: true });
+    };
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -40,7 +43,7 @@ export const AppBar = ({ pages }) => {
                         component="div"
                         sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
                     >
-                        React Router Auth11
+                        React Router Auth
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Layout } from "antd";
 import FeedingList from '../../components/FeedingList'
-import "./main.css"
 
 const { Footer, Content } = Layout;
 

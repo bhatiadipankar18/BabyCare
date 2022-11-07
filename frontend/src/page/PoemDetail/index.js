@@ -1,7 +1,6 @@
 import React from 'react'
 import { Layout } from "antd";
 import PoemList from '../../components/PoemList'
-import "./main.css"
 
 const { Footer, Content } = Layout;
 

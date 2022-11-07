@@ -31,8 +31,18 @@ public class UserController {
     public Result login(@RequestBody Map<String, String> map ){
 
         User user = userRepository.findByUsernameAndPassword(map.get("username"),map.get("password"));
+
+
         if (user==null) {
+
             return Result.fail(-1,null);
+        }else{
+            if(user.getRole()==1){
+                return Result.success(user.getRole());
+            } else if (user.getRole()==2) {
+                return Result.success(user.getRole());
+            }
+
         }
         return Result.success(null);
 
