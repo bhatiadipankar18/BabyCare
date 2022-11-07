@@ -6,7 +6,7 @@ const { Footer, Content } = Layout;
 
 export default function Main(props) {
     return (
-        <Layout style={{ height: "100vh", backgroundColor: "white" }}>
+        <Layout style={{  backgroundColor: "white" }}>
             <Content style={{ alignSelf: "center" }}>
                 <FeedingList history={ props.history } />
             </Content>
