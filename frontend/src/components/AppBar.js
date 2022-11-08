@@ -15,7 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
-import SelectChild from "../components/SelectChild"
+import SelectChild2 from "../components/SelectChild2"
 
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
@@ -151,13 +151,13 @@ export const AppBar = ({ pages }) => {
                             //     <MenuItem value={20}>Twenty</MenuItem>
                             //     <MenuItem value={30}>Thirty</MenuItem>
                             // </Select>
-                            <SelectChild
+                            <SelectChild2
 
 
 
                             >
 
-                            </SelectChild>
+                            </SelectChild2>
                         )}
                     </Box>
                 </Toolbar>

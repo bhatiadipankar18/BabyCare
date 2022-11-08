@@ -58,7 +58,7 @@ export default function Asynchronous() {
             onClose={() => {
                 setOpen(false);
             }}
-            isOptionEqualToValue={(option, value) => option.childName === value.childName}
+            // isOptionEqualToValue={(option, value) => option.childName === value.childName}
             getOptionLabel={(option) => option.childName}
             onChange={(e, value) => console.log(value.childId)}
 
