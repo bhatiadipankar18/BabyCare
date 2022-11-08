@@ -1,11 +1,91 @@
 import React, { useEffect, useState } from 'react'
-import { Table, Button, Avatar, Popconfirm, Modal, Select } from "antd";
+import {Table, Button, Avatar, Popconfirm, Modal, Select, Form, Row, Col, Input} from "antd";
 import axios from "axios";
-import PoemForm from '../PoemForm';
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 
 const {Option} = Select;
+const FormItem = Form.Item;
+
+
+ function PoemForm(props) {
+
+
+
+
+    const onFinish = (values) => {
+        console.log(values)
+        console.log(props)
+
+        // no props.value => add
+        let data = values;
+        if(!props.values) {
+            data["childId"] = props.childId;
+
+            props.handleAdd(data);
+            props.onAddSubmit();
+        } else {
+            //  => update
+            data["id"] = props.values.id;
+            data["childId"] = props.values.childId;
+            props.handleUpd(values);
+            props.onUpdSubmit();
+        }
+    }
+
+    const layout = {
+        labelCol: { span: 4 },
+        wrapperCol: { span: 18 },
+    };
+
+    const gutter = {
+        xs: 8,
+        sm: 16,
+        md: 24,
+        lg: 32,
+    }
+
+    return (
+        <div>
+            <Form
+                {...layout}
+                initialValues={props.values}
+                style={{ width: 650 }}
+                onFinish={ onFinish }>
+
+
+
+
+
+                <Row gutter={gutter}>
+                    <Col span={16}>
+                        <FormItem
+                            className="poemName"
+                            label="poemName"
+                            name="poemName"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "please enter poemName ",
+                                }
+                            ]}
+                        >
+                            <Input placeholder="poemName" allowClear />
+                        </FormItem>
+                    </Col>
+                </Row>
+
+
+
+                <FormItem>
+                    <Button style={{ width: "650px" }} htmlType="submit" type="primary">
+                        Submit
+                    </Button>
+                </FormItem>
+            </Form>
+        </div>
+    )
+}
 
 export default function FeedingList(props) {
 

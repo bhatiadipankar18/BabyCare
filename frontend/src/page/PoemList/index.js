@@ -20,7 +20,7 @@ import { useAuth } from "../../hooks/useAuth";
 let parentId;
 
 const loadOptions = (inputValue, callback) => {
-
+    console.log("loading children dropping bar")
     const params = {
         parentId: parentId,
     };

@@ -6,7 +6,6 @@ import Feeding from "./page/Feeding"
 import { ProfilePage } from "./page/Profile";
 
 import PoemList from "./page/PoemList"
-import PoemDetail from "./page/PoemDetail"
 import { ProtectedLayout } from "./components/ProtectedLayout";
 import { HomeLayout } from "./components/HomeLayout";
 import 'antd/dist/antd.min.css'
@@ -25,7 +24,6 @@ function App() {
                 <Route path="profile" element={<ProfilePage />} />
                 <Route path="feeding" element={<Feeding />}></Route>
                 <Route path="poemList" element={<PoemList />}></Route>
-                <Route path="poemList/:id" element={<PoemDetail />}></Route>
             </Route>
         </Routes>
     );
