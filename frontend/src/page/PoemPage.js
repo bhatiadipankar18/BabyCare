@@ -14,30 +14,14 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import axios from "axios";
 import AsyncSelect from 'react-select/async';
 import {logDOM} from "@testing-library/react";
-import { useAuth } from "../../hooks/useAuth";
+import {useAuth} from "../hooks/useAuth";
 import {Button, Col, Form, Input, Modal, Popconfirm, Row, Select, Table} from "antd";
-import { Link } from 'react-router-dom';
-import { useParams } from "react-router-dom";
+import {Link} from 'react-router-dom';
+import {useParams} from "react-router-dom";
+
 let parentId;
 
-const loadOptions = (inputValue, callback) => {
-    console.log("loading children dropping bar")
-    const params = {
-        parentId: parentId,
-    };
-    // perform a request
-    const requestResults =  axios.get("http://localhost:8888/getChildrenByParentId", { params })
-        .then((response) => {
-            const options = []
-            response.data.forEach((child) => {
-                options.push({
-                    label: child.childName,
-                    value: child.childId
-                })
-            })
-            callback(options);
-        })
-}
+
 
 
 const {Option} = Select;
@@ -46,15 +30,11 @@ const FormItem = Form.Item;
 function PoemForm(props) {
 
 
-
-
     const onFinish = (values) => {
-        console.log(values)
-        console.log(props)
 
         // no props.value => add
         let data = values;
-        if(!props.values) {
+        if (!props.values) {
             data["childId"] = props.childId;
 
             props.handleAdd(data);
@@ -69,8 +49,8 @@ function PoemForm(props) {
     }
 
     const layout = {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 18 },
+        labelCol: {span: 4},
+        wrapperCol: {span: 18},
     };
 
     const gutter = {
@@ -85,11 +65,8 @@ function PoemForm(props) {
             <Form
                 {...layout}
                 initialValues={props.values}
-                style={{ width: 650 }}
-                onFinish={ onFinish }>
-
-
-
+                style={{width: 650}}
+                onFinish={onFinish}>
 
 
                 <Row gutter={gutter}>
@@ -105,15 +82,14 @@ function PoemForm(props) {
                                 }
                             ]}
                         >
-                            <Input placeholder="poemName" allowClear />
+                            <Input placeholder="poemName" allowClear/>
                         </FormItem>
                     </Col>
                 </Row>
 
 
-
                 <FormItem>
-                    <Button style={{ width: "650px" }} htmlType="submit" type="primary">
+                    <Button style={{width: "650px"}} htmlType="submit" type="primary">
                         Submit
                     </Button>
                 </FormItem>
@@ -122,7 +98,7 @@ function PoemForm(props) {
     )
 }
 
- function PoemTable(props) {
+function PoemTable(props) {
 
     // define dataSource && some states
     const [dataSource, setDataSource] = useState([]);
@@ -134,8 +110,8 @@ function PoemForm(props) {
 
     // utils
     const delFromArrayByItemElm = (arr, id) => {
-        for(let i = 0; i < arr.length; i++) {
-            if(arr[i].id === id) return i;
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].id === id) return i;
         }
     }
 
@@ -147,26 +123,15 @@ function PoemForm(props) {
      */
     const updArrayByItem = (arr, item) => {
         let newArr = arr.map((arrItem) => {
-            if(arrItem.id === item.id) { return item; }
-            else { return arrItem; }
+            if (arrItem.id === item.id) {
+                return item;
+            } else {
+                return arrItem;
+            }
         });
         return newArr;
     }
 
-    /**
-     * Query by name
-     * @param {string} key
-     * @param {Array} arr
-     */
-    const fuzzyQuery = (arr, key) => {
-        let fuzzyArr = [];
-        arr.forEach(element => {
-            if(element.name.indexOf(key) >= 0) {
-                fuzzyArr.push(element);
-            }
-        });
-        return fuzzyArr;
-    }
 
     /**
      *
@@ -176,14 +141,12 @@ function PoemForm(props) {
      */
 
 
-
-
     // index data
     useEffect(() => {
         const params = {
             childId: props.childId,
         };
-        axios.get("http://localhost:8888/poemList/findByChildId",{ params })
+        axios.get("http://localhost:8888/poemList/findByChildId", {params})
             .then((rsp) => {
                 setDataSource(rsp.data);
             })
@@ -197,7 +160,7 @@ function PoemForm(props) {
         axios.delete('http://localhost:8888/poemList/deleteById/' + index.id)
             .then((rsp) => {
                 let tmpData = [...dataSource];
-                let i = delFromArrayByItemElm(tmpData ,index.id);
+                let i = delFromArrayByItemElm(tmpData, index.id);
                 tmpData.splice(i, 1);
                 //  console.log(tmpData)
                 setDataSource(tmpData)
@@ -245,35 +208,10 @@ function PoemForm(props) {
         setUpdVal(data);
     }
 
-    // CRUD -> R
-    const onSearch = value => {
-        if(value) {
-            setSearchText(value);
-            let tmpData = fuzzyQuery(dataSource, value);
-            setSearchData(tmpData);
-        }
-    }
-
-    const onClickSearchItem = value => {
-        let path = "/profile/" + value;
-        props.history.push(path);
-        setSearchData([]);
-    }
 
     // table header
     const columns = [
-        // {
-        //     title: 'Avatar',
-        //     dataIndex: 'avatar',
-        //     key: 'avatar',
-        //     render: (_,index) => {
-        //         return(
-        //             <Link to={`/profile/${index.id}`}>
-        //                 <Avatar src={ index.avatar } />
-        //             </Link>
-        //         )
-        //     }
-        // },
+
         {
             title: 'poemId',
             dataIndex: 'id',
@@ -290,12 +228,12 @@ function PoemForm(props) {
             title: 'Operation',
             dataIndex: 'operation',
             key: 'operation',
-            render: (_,index) =>
+            render: (_, index) =>
                 dataSource.length >= 1 ? (
                     <div className="del-update-container">
                         <Button size="small" type="primary" onClick={() => onUpdClick(index)}>Update</Button>
                         <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(index)}>
-                            <Button style={{ marginLeft: 5 }} size="small" danger type="primary">Delete</Button>
+                            <Button style={{marginLeft: 5}} size="small" danger type="primary">Delete</Button>
                         </Popconfirm>
                     </div>
                 ) : null
@@ -320,44 +258,28 @@ function PoemForm(props) {
                 >
                     Add a row
                 </Button>
-                <Select
-                    style={{ width: 200 }}
-                    placeholder="input search text"
-                    showSearch
-                    showArrow={false}
-                    filterOption={false}
-                    notFoundContent="nothing~🙄"
-                    value = {searchText}
-                    onSearch={onSearch}
-                    onChange={onClickSearchItem}
-                >
-                    { searchData.map(d => (
-                        <Option key={d.id}>{d.name}</Option>
-                    ))
-                    }
-                </Select>
             </div>
 
             <Modal
-                style={{ display: "flex", justifyContent: "center" }}
+                style={{display: "flex", justifyContent: "center"}}
                 destroyOnClose={true}
                 title="Add a poemmmmmm"
                 open={isAddModalVisible}
                 footer={[]}
                 onCancel={() => setIsAddModalVisible(false)}
             >
-                <PoemForm childId={props.childId} handleAdd={handleAdd} onAddSubmit={onAddSubmit} />
+                <PoemForm childId={props.childId} handleAdd={handleAdd} onAddSubmit={onAddSubmit}/>
             </Modal>
 
             <Modal
-                style={{ display: "flex", justifyContent: "center" }}
+                style={{display: "flex", justifyContent: "center"}}
                 destroyOnClose={true}
                 title="Update a feeding"
                 open={isUpdModalVisible}
                 footer={[]}
                 onCancel={() => setIsUpdModalVisible(false)}
             >
-                <PoemForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit} />
+                <PoemForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit}/>
             </Modal>
 
             <Table
@@ -366,41 +288,61 @@ function PoemForm(props) {
                     return record.id
                 }}
                 dataSource={dataSource}
-                scroll={{ y: "470px" }}
+                scroll={{y: "470px"}}
             />
         </div>
     )
 }
-export default function PoemList() {
+
+const loadOptions = (inputValue, callback) => {
+    console.log("loading children dropping bar")
+    const params = {
+        parentId: parentId,
+    };
+    // perform a request
+    axios.get("http://localhost:8888/getChildrenByParentId", {params})
+        .then((response) => {
+            const options = []
+            response.data.forEach((child) => {
+                options.push({
+                    label: child.childName,
+                    value: child.childId
+                })
+            })
+            callback(options);
+        })
+}
+
+export default function PoemPage() {
 
     const navigate = useNavigate();
-    const { user,setUser } = useAuth();
-    parentId=user["userId"];
-    console.log("parentId",parentId)
+    const {user, setUser} = useAuth();
+    parentId = user["userId"];
+    console.log("parentId", parentId)
 
-    const [selectedOption, setSelectedOption]=useState(null);
-    const [childId, setChildId]=useState(0);
+    const [selectedOption, setSelectedOption] = useState(null);
+    const [childId, setChildId] = useState(0);
     return (
 
 
-            <Container component="main" maxWidth="xs">
-                <Box
-                    sx={{
-                        marginTop: 8,
-                    }}
-                >
-                    <AsyncSelect cacheOptions
-                                 value={selectedOption}
-                                 onChange={newValue => {
-                                     setSelectedOption(newValue)
-                                     setChildId(newValue.value)
-                                 }}
-                                 loadOptions={loadOptions} defaultOptions />
-                    <PoemTable  childId={childId}/>
+        <Container component="main" maxWidth="xs">
+            <Box
+                sx={{
+                    marginTop: 8,
+                }}
+            >
+                <AsyncSelect cacheOptions
+                             value={selectedOption}
+                             onChange={newValue => {
+                                 setSelectedOption(newValue)
+                                 setChildId(newValue.value)
+                             }}
+                             loadOptions={loadOptions} defaultOptions/>
+                <PoemTable childId={childId}/>
 
-                </Box>
+            </Box>
 
-            </Container>
+        </Container>
     );
 
 }
