@@ -9,15 +9,32 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 
 import Button from "@mui/material/Button";
-
-import MenuItem from "@mui/material/MenuItem";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import axios from "axios";
+import SelectChild from "../components/SelectChild"
+
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
+import {useState} from "react";
 
 export const AppBar = ({ pages }) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const navigate = useNavigate();
     const { user,setUser } = useAuth();
+    const [selectedChild, setSelectedChild] = useState(null);
+
+    console.log("useStatingQ@")
+    const [childId, setChildId] = useState(0);
+    const [age, setAge] = React.useState('');
+    const handleChange = (event) => {
+        setAge(event.target.value);
+    };
+
+
     const logout = () => {
         setUser(null);
         navigate("/", { replace: true });
@@ -116,6 +133,31 @@ export const AppBar = ({ pages }) => {
                             >
                                 {"logout"}
                             </Button>
+                        )}
+
+
+
+                    </Box>
+                    <Box>
+                        {!!user && (
+                            // <Select
+                            //     sx={{ backgroundColor:'white' }}
+                            //     labelId="demo-simple-select-label"
+                            //     id="demo-simple-select"
+                            //     value={age}
+                            //         onChange={handleChange}
+                            // >
+                            //     <MenuItem value={10}>Ten</MenuItem>
+                            //     <MenuItem value={20}>Twenty</MenuItem>
+                            //     <MenuItem value={30}>Thirty</MenuItem>
+                            // </Select>
+                            <SelectChild
+
+
+
+                            >
+
+                            </SelectChild>
                         )}
                     </Box>
                 </Toolbar>

@@ -294,55 +294,15 @@ function PoemTable(props) {
     )
 }
 
-const loadOptions = (inputValue, callback) => {
-    console.log("loading children dropping bar")
-    const params = {
-        parentId: parentId,
-    };
-    // perform a request
-    axios.get("http://localhost:8888/getChildrenByParentId", {params})
-        .then((response) => {
-            const options = []
-            response.data.forEach((child) => {
-                options.push({
-                    label: child.childName,
-                    value: child.childId
-                })
-            })
-            callback(options);
-        })
-}
 
 export default function PoemPage() {
 
-    const navigate = useNavigate();
-    const {user, setUser} = useAuth();
-    parentId = user["userId"];
-    console.log("parentId", parentId)
 
-    const [selectedOption, setSelectedOption] = useState(null);
-    const [childId, setChildId] = useState(0);
+    const [childId] = useState(0);
     return (
+        <PoemTable childId={childId}/>
 
 
-        <Container component="main" maxWidth="xs">
-            <Box
-                sx={{
-                    marginTop: 8,
-                }}
-            >
-                <AsyncSelect cacheOptions
-                             value={selectedOption}
-                             onChange={newValue => {
-                                 setSelectedOption(newValue)
-                                 setChildId(newValue.value)
-                             }}
-                             loadOptions={loadOptions} defaultOptions/>
-                <PoemTable childId={childId}/>
-
-            </Box>
-
-        </Container>
     );
 
 }
