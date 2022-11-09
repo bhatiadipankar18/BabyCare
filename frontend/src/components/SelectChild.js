@@ -1,86 +1,58 @@
 import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import CircularProgress from '@mui/material/CircularProgress';
+import {default as ReactSelect}  from 'react-select';
+
+import {useState,useEffect} from "react";
 import axios from "axios";
 import {useAuth} from "../hooks/useAuth";
 
+export default function BasicSelect() {
+    const { user,setUser,child, setChild } = useAuth();
+    const [age, setAge] = React.useState('');
+
+    const handleChange = (event) => {
+        setAge(event.target.value);
+    };
 
 
-export default function Asynchronous() {
-    const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState([]);
-    const loading = open && options.length === 0;
-    const { user,setUser } = useAuth();
 
-    React.useEffect(() => {
-        let active = true;
-        if (!loading) {
-            return undefined;
-        }
+
+    const [menu, setMenu] = useState([]);
+
+    useEffect(() => {
         const params = {
             parentId: user["userId"],
         };
-
-        (async () => {
-            await axios.get("http://localhost:8888/getChildrenByParentId", {params})
+        const getMenus = async () => {
+            const res = await axios.get("http://localhost:8888/getChildrenByParentId", {params})
                 .then((response) => {
                     const options = []
-                    response.data.forEach((child) => {
-                        options.push(child)
+                    response.data.forEach((eachChild) => {
+                        options.push({"value":eachChild.childId,"label":eachChild.childName})
                     })
-                    if (active) {
-                        setOptions(options);
-                    }
+                    setMenu(options);
                 })
-        })();
-
-        return () => {
-            active = false;
         };
-    }, [loading]);
+        getMenus();
+    }, []);
 
-    React.useEffect(() => {
-        if (!open) {
-            setOptions([]);
-        }
-    }, [open]);
+
 
     return (
-        <Autocomplete
-            sx={{ backgroundColor:'white' }}
-            id="asynchronous-demo"
-            // sx={{ width: 300 }}
-            open={open}
-            onOpen={() => {
-                setOpen(true);
+        <>
+        <ReactSelect
+            defaultValue = {child}
+            options={menu}
+            onChange={(option)=>{
+                setChild(option)
             }}
-            onClose={() => {
-                setOpen(false);
-            }}
-            // isOptionEqualToValue={(option, value) => option.childName === value.childName}
-            getOptionLabel={(option) => option.childName}
-            onChange={(e, value) => console.log(value.childId)}
-
-            options={options}
-            loading={loading}
-            renderInput={(params) => (
-                <TextField
-                    {...params}
-                    // label="choose a kid"
-                    InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                            <React.Fragment>
-                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                                {params.InputProps.endAdornment}
-                            </React.Fragment>
-                        ),
-                    }}
-                />
-            )}
+            menuPortalTarget={document.body}
+            isSearchable={false}
         />
+
+
+
+
+        </>
+
     );
 }
-
-

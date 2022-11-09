@@ -8,6 +8,7 @@ import { ProfilePage } from "./page/Profile";
 import PoemPage from "./page/PoemPage"
 import { ProtectedLayout } from "./components/ProtectedLayout";
 import { HomeLayout } from "./components/HomeLayout";
+import  BasicSelect  from "./components/SelectChild";
 import 'antd/dist/antd.min.css'
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/dashboard" element={<ProtectedLayout />}>
                 {/*<Route path="/" element={<Home />}></Route>*/}
                 <Route path="profile" element={<ProfilePage />} />
+                <Route path="test" element={<BasicSelect />} />
                 <Route path="feeding" element={<Feeding />}></Route>
                 <Route path="poemList" element={<PoemPage />}></Route>
             </Route>

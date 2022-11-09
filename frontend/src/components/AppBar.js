@@ -15,11 +15,38 @@ import FormControl from '@mui/material/FormControl';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
-import SelectChild2 from "../components/SelectChild2"
+import MuiSelect from "../components/SelectChild"
+import ReactSelect from "./SelectChild"
+import ReactDOM from 'react-dom';
 
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import {useState} from "react";
+
+// const PortalModal = ({ message, isOpen, onClose }) => {
+//     if (!isOpen) return null;
+//     return ReactDOM.createPortal(
+//         <div className="modal">
+//             <h2>{message}</h2>
+//             <button className="close" onClick={onClose}>
+//                 Close
+//             </button>
+//         </div>,
+//         // document.getElementById("haha")
+//         document.getElementById("haha")
+//     );
+// };
+
+// const Modal2 =({ message, isOpen, onClose, children })=> {
+//     if (!isOpen) return null
+//     return ReactDOM.createPortal(
+//     <div className="modal">
+//         11
+//         <ReactSelectPortal />
+//         </div>,
+//         document.body)
+// }
+
 
 export const AppBar = ({ pages }) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -27,7 +54,7 @@ export const AppBar = ({ pages }) => {
     const { user,setUser } = useAuth();
     const [selectedChild, setSelectedChild] = useState(null);
 
-    console.log("useStatingQ@")
+    // console.log("useStatingQ@")
     const [childId, setChildId] = useState(0);
     const [age, setAge] = React.useState('');
     const handleChange = (event) => {
@@ -50,8 +77,15 @@ export const AppBar = ({ pages }) => {
         }
     };
 
-    return (
+    return (<>
+
+
+
         <MuiAppBar position="static">
+
+
+
+
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography
@@ -138,30 +172,16 @@ export const AppBar = ({ pages }) => {
 
 
                     </Box>
-                    <Box>
+                    <Box >
                         {!!user && (
-                            // <Select
-                            //     sx={{ backgroundColor:'white' }}
-                            //     labelId="demo-simple-select-label"
-                            //     id="demo-simple-select"
-                            //     value={age}
-                            //         onChange={handleChange}
-                            // >
-                            //     <MenuItem value={10}>Ten</MenuItem>
-                            //     <MenuItem value={20}>Twenty</MenuItem>
-                            //     <MenuItem value={30}>Thirty</MenuItem>
-                            // </Select>
-                            <SelectChild2
-
-
-
-                            >
-
-                            </SelectChild2>
+                            <ReactSelect/>
                         )}
+
+
                     </Box>
                 </Toolbar>
             </Container>
         </MuiAppBar>
+        </>
     );
 };
