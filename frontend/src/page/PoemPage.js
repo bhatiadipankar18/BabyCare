@@ -297,12 +297,17 @@ function PoemTable(props) {
 
 export default function PoemPage() {
 
+    const { child } = useAuth();
 
-    const [childId] = useState(0);
-    return (
-        <PoemTable childId={childId}/>
+    if(child){
+        return (
+            <PoemTable childId={parseInt(child["value"])}/>
+        );
+    }else{
+        return(
+            "choose your kid"
+        )
+    }
 
-
-    );
 
 }

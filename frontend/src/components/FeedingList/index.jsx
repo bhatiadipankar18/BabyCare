@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Table, Button, Avatar, Popconfirm, Modal, Select } from "antd";
 import axios from "axios";
-// import "./feeding-list.css";
+import "./feeding-list.css";
 import FeedingForm from '../FeedingForm';
 import { Link } from 'react-router-dom';
 

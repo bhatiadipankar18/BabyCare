@@ -83,7 +83,7 @@ export default function SignUp() {
                 //if got token from backend, store it in localstorage
                 setOpen(false);
                 setUser(res["data"]);
-                navigate("/dashboard/feeding", { replace: true });
+                navigate("/dashboard/poemList", { replace: true });
                 setOpen(true);
             } else {
                 setMsg(res);

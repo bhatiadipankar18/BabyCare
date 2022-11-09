@@ -51,11 +51,10 @@ import {useState} from "react";
 export const AppBar = ({ pages }) => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const navigate = useNavigate();
-    const { user,setUser } = useAuth();
+    const { user,setUser,setChild } = useAuth();
     const [selectedChild, setSelectedChild] = useState(null);
 
     // console.log("useStatingQ@")
-    const [childId, setChildId] = useState(0);
     const [age, setAge] = React.useState('');
     const handleChange = (event) => {
         setAge(event.target.value);
@@ -64,6 +63,7 @@ export const AppBar = ({ pages }) => {
 
     const logout = () => {
         setUser(null);
+        setChild(null);
         navigate("/", { replace: true });
     };
     const handleOpenNavMenu = (event) => {
