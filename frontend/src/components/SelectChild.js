@@ -17,22 +17,40 @@ export default function BasicSelect() {
 
 
     const [menu, setMenu] = useState([]);
+    const getMenusFromParentChild = async () => {
+        const res = await axios.get("http://localhost:8888/getChildrenByParentId", {params})
+            .then((response) => {
+                const options = []
+                response.data.forEach((eachChild) => {
+                    options.push({"value":eachChild.childId,"label":eachChild.childName})
+                })
+                setMenu(options);
+            })
+    };
 
+    const getMenusFromNannyChild = async () => {
+        const res = await axios.get("http://localhost:8888/getChildrenByParentId", {params})
+            .then((response) => {
+                const options = []
+                response.data.forEach((eachChild) => {
+                    options.push({"value":eachChild.childId,"label":eachChild.childName})
+                })
+                setMenu(options);
+            })
+    };
     useEffect(() => {
+        //todo fetch children from diffrent method
+        const userRole=user["userRole"]
+        console.log(userRole);
         const params = {
             parentId: user["userId"],
         };
-        const getMenus = async () => {
-            const res = await axios.get("http://localhost:8888/getChildrenByParentId", {params})
-                .then((response) => {
-                    const options = []
-                    response.data.forEach((eachChild) => {
-                        options.push({"value":eachChild.childId,"label":eachChild.childName})
-                    })
-                    setMenu(options);
-                })
-        };
-        getMenus();
+
+        if(userRole===1){
+
+        }
+
+        getMenusFromParentChild();
     }, []);
 
 

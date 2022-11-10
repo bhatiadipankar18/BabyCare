@@ -23,9 +23,9 @@ function App() {
             <Route path="/dashboard" element={<ProtectedLayout />}>
                 {/*<Route path="/" element={<Home />}></Route>*/}
                 <Route path="profile" element={<ProfilePage />} />
-                <Route path="test" element={<BasicSelect />} />
                 <Route path="feeding" element={<Feeding />}></Route>
                 <Route path="poemList" element={<PoemPage />}></Route>
+                <Route path="test" element={<BasicSelect />} />
             </Route>
         </Routes>
     );

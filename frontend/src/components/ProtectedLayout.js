@@ -10,16 +10,34 @@ export const ProtectedLayout = () => {
         return <Navigate to="/login" />;
     }
 
-    return (
-        <div>
-            <AppBar
-                pages={[
-                    { label: "Profile", path: "profile" },
-                    { label: "Feeding", path: "feeding" },
-                    { label: "Poem", path: "poemList" }
-                ]}
-            />
-            {outlet}
-        </div>
-    );
+    const userRole=user["userRole"]
+    console.log(userRole);
+
+    if(userRole===1){
+        return (
+            <div>
+                <AppBar
+                    pages={[
+                        { label: "EditChild", path: "profile" },
+                        { label: "Feeding", path: "feeding" },
+                        { label: "Poem", path: "poemList" }
+                    ]}
+                />
+                {outlet}
+            </div>
+        );
+    }else{
+        return (
+            <div>
+                <AppBar
+                    pages={[
+                        { label: "Feeding_n", path: "feeding" },
+                        { label: "Poem_n", path: "poemList" }
+                    ]}
+                />
+                {outlet}
+            </div>
+        );
+    }
+
 };

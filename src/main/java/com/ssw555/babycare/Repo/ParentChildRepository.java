@@ -8,6 +8,11 @@ public interface ParentChildRepository extends CrudRepository<ParentChild, Integ
 
     List<ParentChild> findByParentId(int parentId);
 
+//
+//    @Query(value = "select * from person  where name = ?1",nativeQuery = true)
+//
+//    List<ParentChild> findByParentId(int parentId);
+
 }
 
 
