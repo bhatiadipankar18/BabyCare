@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom"
-import Home from "./page/Home"
+import Home from "./page"
 import Login from "./page/Login"
 import Register from "./page/Register"
 import { ProfilePage } from "./page/Profile";
@@ -11,6 +11,7 @@ import { ProtectedLayout } from "./components/ProtectedLayout";
 import { HomeLayout } from "./components/HomeLayout";
 import  BasicSelect  from "./components/SelectChild";
 import 'antd/dist/antd.min.css'
+import './APP.css'
 
 function App() {
 

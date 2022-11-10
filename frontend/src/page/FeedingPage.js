@@ -300,7 +300,6 @@ function FeedingTable(props) {
     return (
         <div className="teacher-list">
 
-
             {user["userRole"]===1&& (<div className="add-search-container">
                 <Button
                     type="primary"
