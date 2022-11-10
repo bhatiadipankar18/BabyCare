@@ -15,15 +15,5 @@ public class Result<T> {
 
 
 
-    public static Result success(String msg, Object data) {
-        return new Result(200,msg,data);
-    }
 
-    public static Result success(String msg) {
-        return new Result(200,msg,null);
-    }
-
-    public static Result fail(int code, String msg) {
-        return new Result(code, msg, null);
-    }
 }

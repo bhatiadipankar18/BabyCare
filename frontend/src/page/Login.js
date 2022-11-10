@@ -78,17 +78,20 @@ export default function SignUp() {
             method: 'POST',
             data: register
         }).then(res => {
-            if (res instanceof Object) {
-                console.log("res",res)
+            if (res.data instanceof Object) {
                 //if got token from backend, store it in localstorage
                 setOpen(false);
-                setUser(res["data"]);
+                console.log(res.data);
+                setUser(res.data["data"]);
                 navigate("/dashboard/poemList", { replace: true });
                 setOpen(true);
             } else {
-                setMsg(res);
+                setMsg("unknown error");
                 setOpen(true);
             }
+        }).catch(error => {
+            setMsg(error.message);
+            setOpen(true);
         })
 
     };

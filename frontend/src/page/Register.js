@@ -17,7 +17,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Select from 'react-select'
-import { request } from '../../request';
+import { request } from '../request';
 
 
 

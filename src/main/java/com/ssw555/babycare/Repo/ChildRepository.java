@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface ChildRepository extends CrudRepository<Child, Integer> {
 
-//    List<Child> findChildByParentId();
+    List<Child> findChildByParentId(int parentId);
+
+    List<Child> findChildByNannyId(int nannyId);
 //
 //    List<Child> findChildByNannyId();
 }

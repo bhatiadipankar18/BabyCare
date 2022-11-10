@@ -31,7 +31,7 @@ export default function BasicSelect() {
     };
 
     const getMenusFromNannyChild = async () => {
-        const res = await axios.get("http://localhost:8888/getChildrenByParentId", {params})
+        const res = await axios.get("http://localhost:8888/getChildrenByNannyId", {params})
             .then((response) => {
                 const options = []
                 response.data.forEach((eachChild) => {
@@ -47,10 +47,12 @@ export default function BasicSelect() {
 
 
         if(userRole===1){
-
+            getMenusFromParentChild()
+        }else{
+            getMenusFromNannyChild()
         }
 
-        getMenusFromParentChild();
+        ;
     }, []);
 
 
