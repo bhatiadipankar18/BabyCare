@@ -18,6 +18,8 @@ import {useAuth} from "../hooks/useAuth";
 import {Button, Col, Form, Input, Modal, Popconfirm, Row, Select, Table} from "antd";
 import {Link} from 'react-router-dom';
 import {useParams} from "react-router-dom";
+import { Layout } from "antd";
+const {  Content } = Layout;
 
 let parentId;
 
@@ -307,7 +309,11 @@ export default function PoemPage() {
 
     if(child){
         return (
-            <PoemTable childId={parseInt(child["value"])}/>
+            <Layout style={{  backgroundColor: "white" }}>
+                <Content style={{ alignSelf: "center" }}>
+                    <PoemTable childId={parseInt(child["value"])}/>
+                </Content>
+            </Layout>
         );
     }else{
         return(
