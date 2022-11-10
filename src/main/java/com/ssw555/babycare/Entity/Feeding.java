@@ -18,6 +18,7 @@ public class Feeding {
     private Integer id;
 
     private Integer childId;
+    private String age;
     private String milk;
     private String food;
 
