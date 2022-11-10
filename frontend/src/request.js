@@ -20,33 +20,15 @@ export function request(config) {
     })
 
 
-    //后置拦截，对各种错误进行处理
-    instance.interceptors.response.use(handle => {
-
-
-        console.log(handle)
-        //服务器响应正确的数据
-        if(handle.data.code === 200) {
-            return handle.data;
-
-        }else if(handle.data.code === -1) {
-            return 'wrong username or password';   
-        }else if(handle.data.code === 6004) {
-            //未登录
-            Navigate.push("/login");
-            Navigate.go();
-        }
-        else if(handle.data.code === -999) {
-            //非法进入详情页
-            Navigate.push('/login');
-            Navigate.go();
-        }
-        else {
-            return handle.data.msg;
-        }
-    },error => {
-        return error.message;
-    })
+    //todo the only use is handle request error like network error
+    //need I keep this?
+    // instance.interceptors.response.use(handle => {
+    //     //todo if 200 green msg else red msg
+    //     return handle.data;
+    // },error => {
+    //     // console.log(error);
+    //     return error.message;
+    // })
 
     return instance(config);
 }

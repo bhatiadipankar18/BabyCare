@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 
@@ -16,14 +17,16 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     @RequestMapping(value = "/user/register",method = RequestMethod.POST)
-    public Result register(@RequestBody Map<String, String> map ){
-        //System.out.println(map.get("account") + " "+map.get("password") );
-        User user=new User();
-        user.setUsername(map.get("account"));
-        user.setPassword(map.get("password"));
+    public Result register(@RequestBody User user ){
+
+        Optional<User> one = userRepository.findUserByUsername(user.getUsername());
+        if (one.isPresent ()) {
+            //todo bad username
+            return Result.fail(0,"invalid username");
+        }
+
         User save = userRepository.save(user);
-        System.out.println(save);
-        return Result.success(null);
+        return Result.success("register success");
 
     }
 
@@ -38,7 +41,7 @@ public class UserController {
             data.put("userId",user.getId());
             data.put("userRole",user.getRole());
             data.put("token","tokentoken");
-            return Result.success(data);
+            return Result.success("login sucess",data);
         }
     }
 }

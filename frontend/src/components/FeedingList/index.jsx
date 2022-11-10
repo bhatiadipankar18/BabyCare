@@ -63,6 +63,7 @@ export default function FeedingList(props) {
     useEffect(() => {
         axios.get("http://localhost:8888/feeding/findAll")
              .then((rsp) => {
+                 console.log("rsp",rsp);
                  setDataSource(rsp.data);
              })
              .catch((error) => {

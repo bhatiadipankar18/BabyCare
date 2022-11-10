@@ -11,8 +11,8 @@ import java.util.*;
 
 public class PoemController {
 
-    @Autowired
-    private ParentChildRepository parentChildRepository;
+//    @Autowired
+//    private ParentChildRepository parentChildRepository;
 
 
     @Autowired
@@ -29,22 +29,22 @@ public class PoemController {
         return  res;
 
     }
-    @GetMapping("/getChildrenByParentId")
-    public List<Map> getAllParentChild(int parentId){
-        List<ParentChild> byParentId = parentChildRepository.findByParentId(parentId);
-        List<Map> res=new ArrayList<>();
-        for (ParentChild parentChild : byParentId) {
-            Integer childId = parentChild.getChildId();
-            Child child = childRepository.findById(childId).orElse(null);
-            HashMap<String,String> map=new HashMap();
-            map.put("childId", String.valueOf(parentChild.getChildId()));
-            map.put("childName",child.getChildName() );
-            res.add(map);
-
-        }
-        return  res;
-
-    }
+//    @GetMapping("/getChildrenByParentId")
+//    public List<Map> getAllParentChild(int parentId){
+//        List<ParentChild> byParentId = parentChildRepository.findByParentId(parentId);
+//        List<Map> res=new ArrayList<>();
+//        for (ParentChild parentChild : byParentId) {
+//            Integer childId = parentChild.getChildId();
+//            Child child = childRepository.findById(childId).orElse(null);
+//            HashMap<String,String> map=new HashMap();
+//            map.put("childId", String.valueOf(parentChild.getChildId()));
+//            map.put("childName",child.getChildName() );
+//            res.add(map);
+//
+//        }
+//        return  res;
+//
+//    }
 
 //    @GetMapping("/getChildrenByParentId")
 //    public List<Map> getAllParentChild(int parentId){

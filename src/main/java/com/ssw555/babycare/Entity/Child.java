@@ -18,6 +18,9 @@ public class Child {
     private Integer id;
 
     private String childName;
+    private Integer parentId;
+    private Integer nannyId;
+
 
 
 }

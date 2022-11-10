@@ -19,13 +19,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Select from 'react-select'
 import { request } from '../../request';
 
-const options = [
-  { value: '1', label: 'parents' },
-  { value: '2', label: 'nanny' }
-]
-const RoleSelectComponent = () => (
-  <Select options={options} />
-)
+
+
 
 
 
@@ -49,8 +44,14 @@ const theme = createTheme();
 
 export default function SignUp() {
 
+  const options = [
+    { value: 1, label: 'parents' },
+    { value: 2, label: 'nanny' }
+  ]
+
   const [open, setOpen] = React.useState(false);
   const [msg, setMsg] = React.useState(null);
+  const [userRole, setUserRole] = React.useState(1);
   const navigate = useNavigate();
 
   const handleClose = (event, reason) => {
@@ -68,7 +69,7 @@ export default function SignUp() {
     const register = {
       username: data.get('username'),
       password: data.get('password'),
-     role: data.get('select')
+     role: userRole
 
     }
 
@@ -80,15 +81,19 @@ export default function SignUp() {
       method: 'POST',
       data: register
     }).then(res => {
-      if (res instanceof Object) {
-        //if got token from backend, store it in localstorage
-        setOpen(false);
-        //sessionStorage.setItem("token", res.data);
+      console.log("res",res);
+      // good handle
+      if (res.data instanceof Object) {
+        setMsg(res.data["msg"]);
+        // setOpen(false);
         setOpen(true);
       } else {
-        setMsg(res);
+        setMsg("unknown error");
         setOpen(true);
       }
+    }).catch(error => {
+      setMsg(error.message);
+      setOpen(true);
     })
 
   };
@@ -138,7 +143,10 @@ export default function SignUp() {
               </Grid>
 
               <Grid item xs={12}>
-              <RoleSelectComponent></RoleSelectComponent>
+                <Select
+                    options={options}
+                    onChange={(option) => setUserRole(option.value)}
+                />
               </Grid>
 
             </Grid>
@@ -162,6 +170,9 @@ export default function SignUp() {
                   <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                     {msg}
                   </Alert>
+                  {/*<Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>*/}
+                  {/*  {msg}*/}
+                  {/*</Alert>*/}
                 </Snackbar>
               </Stack>
 
