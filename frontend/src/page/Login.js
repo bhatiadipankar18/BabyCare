@@ -79,12 +79,16 @@ export default function SignUp() {
             data: register
         }).then(res => {
             if (res.data instanceof Object) {
-                //if got token from backend, store it in localstorage
-                setOpen(false);
                 console.log(res.data);
-                setUser(res.data["data"]);
-                navigate("/dashboard/poemList", { replace: true });
-                setOpen(true);
+                setMsg(res.data["msg"]);
+                if(res.data["code"]===200){
+                    console.log(res.data);
+                    setUser(res.data["data"]);
+                    setOpen(true);
+                    navigate("/dashboard/poemList", { replace: true });
+                }else{
+                    setOpen(true);
+                }
             } else {
                 setMsg("unknown error");
                 setOpen(true);

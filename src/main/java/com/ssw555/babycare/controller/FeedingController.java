@@ -1,6 +1,7 @@
 package com.ssw555.babycare.controller;
 
 import com.ssw555.babycare.Entity.Feeding;
+import com.ssw555.babycare.Entity.Poem;
 import com.ssw555.babycare.Entity.Result;
 import com.ssw555.babycare.Entity.User;
 import com.ssw555.babycare.Repo.FeedingRepository;
@@ -18,9 +19,11 @@ public class FeedingController {
 
     @Autowired
     private FeedingRepository feedingRepository;
-    @GetMapping("/feeding/findAll")
-    public List<Feeding> getAllFeedings( ){
-        return  feedingRepository.findAll();
+
+    @GetMapping("/feeding/findByChildId")
+    public List<Feeding> getPoemByChildId(int childId){
+        List<Feeding> res = feedingRepository.findByChildId(childId);
+        return  res;
 
     }
 

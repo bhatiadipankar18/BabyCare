@@ -17,7 +17,7 @@ public class Feeding {
     @Column(name = "id")
     private Integer id;
 
-    private String age;
+    private Integer childId;
     private String milk;
     private String food;
 

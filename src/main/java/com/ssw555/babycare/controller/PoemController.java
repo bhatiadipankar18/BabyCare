@@ -11,12 +11,9 @@ import java.util.*;
 
 public class PoemController {
 
-//    @Autowired
-//    private ParentChildRepository parentChildRepository;
 
 
-    @Autowired
-    private ChildRepository childRepository;
+
 
     @Autowired
     private PoemRepository poemRepository;
