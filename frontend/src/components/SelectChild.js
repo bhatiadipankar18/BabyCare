@@ -14,7 +14,9 @@ export default function BasicSelect() {
     };
 
 
-
+    const params = {
+        parentId: user["userId"],
+    };
 
     const [menu, setMenu] = useState([]);
     const getMenusFromParentChild = async () => {
@@ -42,9 +44,7 @@ export default function BasicSelect() {
         //todo fetch children from diffrent method
         const userRole=user["userRole"]
         console.log(userRole);
-        const params = {
-            parentId: user["userId"],
-        };
+
 
         if(userRole===1){
 
