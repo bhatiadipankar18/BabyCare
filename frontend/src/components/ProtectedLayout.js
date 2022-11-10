@@ -11,7 +11,7 @@ export const ProtectedLayout = () => {
     }
 
     const userRole=user["userRole"]
-    console.log(userRole);
+    // console.log(userRole);
 
     if(userRole===1){
         return (

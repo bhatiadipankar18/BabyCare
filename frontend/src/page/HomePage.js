@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 
-class Home extends Component {
+class HomePage extends Component {
 
 
     render() {
@@ -17,4 +17,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default HomePage;

@@ -26,7 +26,7 @@ export default function BasicSelect() {
                 response.data.forEach((eachChild) => {
                     options.push({"value":eachChild.id,"label":eachChild.childName})
                 })
-                console.log(options);
+                // console.log(options);
 
                 setMenu(options);
             })
@@ -39,14 +39,14 @@ export default function BasicSelect() {
                 response.data.forEach((eachChild) => {
                     options.push({"value":eachChild.id,"label":eachChild.childName})
                 })
-                console.log(options);
+                // console.log(options);
                 setMenu(options);
             })
     };
     useEffect(() => {
         //todo fetch children from diffrent method
         const userRole=user["userRole"]
-        console.log(userRole);
+        // console.log(userRole);
 
 
         if(userRole===1){
