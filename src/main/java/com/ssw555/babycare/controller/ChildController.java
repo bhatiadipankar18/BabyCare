@@ -19,8 +19,7 @@ public class ChildController {
     @Autowired
     private ChildRepository childRepository;
 
-    @Autowired
-    private PoemRepository poemRepository;
+
 
 
 
