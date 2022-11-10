@@ -23,29 +23,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import {useState} from "react";
 
-// const PortalModal = ({ message, isOpen, onClose }) => {
-//     if (!isOpen) return null;
-//     return ReactDOM.createPortal(
-//         <div className="modal">
-//             <h2>{message}</h2>
-//             <button className="close" onClick={onClose}>
-//                 Close
-//             </button>
-//         </div>,
-//         // document.getElementById("haha")
-//         document.getElementById("haha")
-//     );
-// };
 
-// const Modal2 =({ message, isOpen, onClose, children })=> {
-//     if (!isOpen) return null
-//     return ReactDOM.createPortal(
-//     <div className="modal">
-//         11
-//         <ReactSelectPortal />
-//         </div>,
-//         document.body)
-// }
 
 
 export const AppBar = ({ pages }) => {

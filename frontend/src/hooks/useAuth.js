@@ -4,7 +4,7 @@ import { useLocalStorage } from "./useLocalStorage";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    // console.log("auth provider 注意我要创建新的useLocalStoreage了");
+    // console.log("auth provider creating useLocalStoreage");
     const [user, setUser] = useLocalStorage("user", null);
     const [child, setChild] = useLocalStorage( "child",null);
     const value = {

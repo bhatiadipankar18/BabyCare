@@ -8,10 +8,10 @@ export function request(config) {
         timeout: 5000
     });
 
-    //前置拦截，我们在这里统一将token设置到请求头中
+    //interceptors before request
     instance.interceptors.request.use(handle => {
-        console.log("我request11了！！")
-        //seesionStorage中的数据当页面关闭就会消失
+        console.log("I am making a request！！")
+        //seesionStorage will lost after closing the page
         const token = sessionStorage.getItem("token");
         handle.headers.Authorization = token;
         return handle;
