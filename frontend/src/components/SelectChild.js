@@ -24,8 +24,10 @@ export default function BasicSelect() {
             .then((response) => {
                 const options = []
                 response.data.forEach((eachChild) => {
-                    options.push({"value":eachChild.childId,"label":eachChild.childName})
+                    options.push({"value":eachChild.id,"label":eachChild.childName})
                 })
+                console.log(options);
+
                 setMenu(options);
             })
     };
@@ -35,8 +37,9 @@ export default function BasicSelect() {
             .then((response) => {
                 const options = []
                 response.data.forEach((eachChild) => {
-                    options.push({"value":eachChild.childId,"label":eachChild.childName})
+                    options.push({"value":eachChild.id,"label":eachChild.childName})
                 })
+                console.log(options);
                 setMenu(options);
             })
     };

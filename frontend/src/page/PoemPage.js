@@ -107,6 +107,7 @@ function PoemTable(props) {
     const [isUpdModalVisible, setIsUpdModalVisible] = useState(false);
     const [searchText, setSearchText] = useState(undefined);
     const [searchData, setSearchData] = useState([]);
+    const { user } = useAuth();
 
     // utils
     const delFromArrayByItemElm = (arr, id) => {
@@ -239,6 +240,10 @@ function PoemTable(props) {
                 ) : null
         }
     ]
+    // nanny can not see operations
+    if(user["userRole"]===2){
+        columns.pop()
+    }
 
     const onAddSubmit = () => {
         setIsAddModalVisible(false)
@@ -251,14 +256,15 @@ function PoemTable(props) {
     return (
         <div className="teacher-list">
 
-            <div className="add-search-container">
+
+            {user["userRole"]===1&& (<div className="add-search-container">
                 <Button
                     type="primary"
                     onClick={() => setIsAddModalVisible(true)}
                 >
                     Add a row
                 </Button>
-            </div>
+            </div>)}
 
             <Modal
                 style={{display: "flex", justifyContent: "center"}}
