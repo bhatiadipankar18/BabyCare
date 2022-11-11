@@ -22,9 +22,9 @@ public class UserController {
 
 
 
-    @GetMapping("/user/findUserByRole")
-    public List<User> findUserByRole(int role){
-        List<User> res = userRepository.findUserByRole(role);
+    @GetMapping("/user/findAllNanny")
+    public List<User> findAllNanny(){
+        List<User> res = userRepository.findUserByRole(2);
         return  res;
 
     }

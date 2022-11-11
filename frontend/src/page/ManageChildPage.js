@@ -29,9 +29,9 @@ let parentId;
 const {Option} = Select;
 const FormItem = Form.Item;
 
-function PoemForm(props) {
+function ChildForm(props) {
 
-    console.log("刚进入pormForm",props);
+    console.log("in to ChildForm",props);
     const onFinish = (values) => {
 
         //value is the data got from form
@@ -64,21 +64,24 @@ function PoemForm(props) {
         md: 24,
         lg: 32,
     }
-    const departmentOps = [
+    const [menu, setMenu] = useState([]);
+    const getNannyDropDown = async () => {
+        const res = await axios.get("http://localhost:8888/user/findAllNanny" )
+            .then((response) => {
+                const options = []
+                response.data.forEach((eachNanny) => {
+                    options.push({"value":eachNanny.id,"label":eachNanny.username})
+                })
+                 console.log("options",options);
+                //setMenu(options);
+                setMenu(options)
+            })
+    };
+    useEffect(() => {
+        getNannyDropDown();
+    }, []);
 
-        {
-            label: 24,
-            value: 24,
-        },
-        {
-            label: 25,
-            value: 25,
-        },
-        {
-            label: 26,
-            value: 26,
-        },
-    ]
+
 
     return (
         <div>
@@ -116,7 +119,7 @@ function PoemForm(props) {
                             name="nannyId"
                             rules={[{ required: true, message: 'Please choose your department!' }]}
                         >
-                            <Cascader options={departmentOps} />
+                            <Cascader options={menu} />
                         </FormItem>
                     </Col>
                 </Row>
@@ -322,7 +325,7 @@ function ChildTable(props) {
                 footer={[]}
                 onCancel={() => setIsAddModalVisible(false)}
             >
-                <PoemForm parentId={props.userId} handleAdd={handleAdd} onAddSubmit={onAddSubmit}/>
+                <ChildForm parentId={props.userId} handleAdd={handleAdd} onAddSubmit={onAddSubmit}/>
             </Modal>
 
             <Modal
@@ -333,7 +336,7 @@ function ChildTable(props) {
                 footer={[]}
                 onCancel={() => setIsUpdModalVisible(false)}
             >
-                <PoemForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit}/>
+                <ChildForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit}/>
             </Modal>
 
             <Table
