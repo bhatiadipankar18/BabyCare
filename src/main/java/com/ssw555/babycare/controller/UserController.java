@@ -1,5 +1,6 @@
 package com.ssw555.babycare.controller;
 
+import com.ssw555.babycare.Entity.Feeding;
 import com.ssw555.babycare.Entity.Result;
 import com.ssw555.babycare.Entity.User;
 import com.ssw555.babycare.Repo.UserRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -17,6 +19,16 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+
+
+    @GetMapping("/user/findUserByRole")
+    public List<User> findUserByRole(int role){
+        List<User> res = userRepository.findUserByRole(role);
+        return  res;
+
+    }
+
     @RequestMapping(value = "/user/register",method = RequestMethod.POST)
     public Result<Object> register(@RequestBody User user ){
 

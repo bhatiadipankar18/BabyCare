@@ -5,13 +5,13 @@ import RegisterPage from "./page/RegisterPage"
 
 import PoemPage from "./page/PoemPage"
 import FeedingPage from "./page/FeedingPage"
+import ManageChildPage from "./page/ManageChildPage";
 
 import { ProtectedLayout } from "./components/ProtectedLayout";
 import { HomeLayout } from "./components/HomeLayout";
 import  BasicSelect  from "./components/SelectChild";
 import 'antd/dist/antd.min.css'
 import './APP.css'
-import {ManageChildPage} from "./page/ManageChildPage";
 
 function App() {
 
