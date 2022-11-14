@@ -115,7 +115,7 @@ function ChildForm(props) {
                     <Col span={16}>
                         <FormItem
                             className="nannyId"
-                            label="nannyId"
+                            label="nannyName"
                             name="nannyId"
                             rules={[{ required: true, message: 'Please choose your department!' }]}
                         >
