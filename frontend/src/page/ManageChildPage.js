@@ -15,15 +15,18 @@ import axios from "axios";
 import AsyncSelect from 'react-select/async';
 import {logDOM} from "@testing-library/react";
 import {useAuth} from "../hooks/useAuth";
-import {Button, Col, Form, Input, Modal, Popconfirm, Row, Select, Table,Cascader} from "antd";
+import {Button, Col, Form, Input, Modal, Popconfirm, Row, Select, Table, Cascader} from "antd";
+import Chat from "../components/Chat";
 import {Link} from 'react-router-dom';
 import {useParams} from "react-router-dom";
-import { Layout } from "antd";
-const {  Content } = Layout;
+import {Layout} from "antd";
+import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
+import io from "socket.io-client";
+
+const {Content} = Layout;
 
 let parentId;
-
-
 
 
 const {Option} = Select;
@@ -31,7 +34,7 @@ const FormItem = Form.Item;
 
 function ChildForm(props) {
 
-    console.log("in to ChildForm",props);
+    console.log("in to ChildForm", props);
     const onFinish = (values) => {
 
         //value is the data got from form
@@ -66,13 +69,13 @@ function ChildForm(props) {
     }
     const [menu, setMenu] = useState([]);
     const getNannyDropDown = async () => {
-        const res = await axios.get("http://localhost:8888/user/findAllNanny" )
+        const res = await axios.get("http://localhost:8888/user/findAllNanny")
             .then((response) => {
                 const options = []
                 response.data.forEach((eachNanny) => {
-                    options.push({"value":eachNanny.id,"label":eachNanny.username})
+                    options.push({"value": eachNanny.id, "label": eachNanny.username})
                 })
-                 console.log("options",options);
+                console.log("options", options);
                 //setMenu(options);
                 setMenu(options)
             })
@@ -80,7 +83,6 @@ function ChildForm(props) {
     useEffect(() => {
         getNannyDropDown();
     }, []);
-
 
 
     return (
@@ -117,9 +119,9 @@ function ChildForm(props) {
                             className="nannyId"
                             label="nannyName"
                             name="nannyId"
-                            rules={[{ required: true, message: 'Please choose your department!' }]}
+                            rules={[{required: true, message: 'Please choose your department!'}]}
                         >
-                            <Cascader options={menu} />
+                            <Cascader options={menu}/>
                         </FormItem>
                     </Col>
                 </Row>
@@ -143,7 +145,7 @@ function ChildTable(props) {
     const [isUpdModalVisible, setIsUpdModalVisible] = useState(false);
     const [searchText, setSearchText] = useState(undefined);
     const [searchData, setSearchData] = useState([]);
-    const { user } = useAuth();
+    const {user} = useAuth();
 
     // utils
     const delFromArrayByItemElm = (arr, id) => {
@@ -224,7 +226,7 @@ function ChildTable(props) {
     // CRUD -> U
     const handleUpd = (value) => {
 
-        console.log("shangchuanzheg",value);
+        console.log("shangchuanzheg", value);
         // debugger
         axios.put('http://localhost:8888/child/update/', value)
             .then((rsp) => {
@@ -292,7 +294,7 @@ function ChildTable(props) {
         }
     ]
     // nanny can not see operations
-    if(user["userRole"]===2){
+    if (user["userRole"] === 2) {
         columns.pop()
     }
 
@@ -308,7 +310,7 @@ function ChildTable(props) {
         <div className="teacher-list">
 
 
-            {user["userRole"]===1&& (<div className="add-search-container">
+            {user["userRole"] === 1 && (<div className="add-search-container">
                 <Button
                     type="primary"
                     onClick={() => setIsAddModalVisible(true)}
@@ -352,21 +354,74 @@ function ChildTable(props) {
 }
 
 
+function ChatLayout(props) {
+
+    const [showChat, setShowChat] = useState(true);
+
+    const childId = props.childId
+    const userName = props.userName
+    const socket = io.connect("http://localhost:3001");
+    // console.log("草泥马我要渲染")
+    socket.emit("join_room", childId);
+
+    return (
+        <>
+
+            <Layout style={{
+                // backgroundColor: "green",
+                width: "300px",
+                marginLeft: "75%",
+                opacity: showChat ? 1 : 0
+            }}>
+                <Chat socket={socket} username={userName} room="child1"/>
+            </Layout>
+
+            <Button
+                style={{
+                    width: "300px",
+                    marginLeft: "75%",
+                }}
+                type="primary"
+                onClick={() => setShowChat(!showChat)}
+                // onClick={() => console.log(1)}
+            >
+                chat here
+            </Button>
+        </>
+    );
+
+
+}
+
+
 export default function ManageChildPage() {
 
-    const { user } = useAuth();
-    const userId=user["userId"]
-    console.log(userId);
+    const {user,child} = useAuth();
+    const userId = user["userId"]
+    const userName = user["userName"]
 
-    
-        return (
-            <Layout style={{  backgroundColor: "white" }}>
-                <Content style={{ alignSelf: "center" }}>
+    // const childId = child["value"]
+    console.log(userId);
+    console.log(child);
+
+
+
+
+
+
+    return (
+        <>
+            <Layout style={{backgroundColor: "white"}}>
+                <Content style={{alignSelf: "center"}}>
                     <ChildTable userId={userId}/>
                 </Content>
             </Layout>
-        );
-   
+            {!!child && (
+                <ChatLayout childId={child["value"]} userName={userName}/>
+            )}
+
+        </>
+    );
 
 
 }

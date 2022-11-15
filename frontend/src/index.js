@@ -12,11 +12,11 @@ const root = createRoot(rootElement);
 
 
 root.render(
-    <StrictMode>
+    // <StrictMode>
         <BrowserRouter>
             <AuthProvider>
                     <App />
             </AuthProvider>
         </BrowserRouter>
-    </StrictMode>
+    // </StrictMode>
 );
