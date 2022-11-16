@@ -17,7 +17,7 @@ const Home = () => {
 
   const button = loogedInUser ?
     <div>
-      <Button color="link"><Link to="/feedingchart">Manage JUG Tour</Link></Button>
+      <Button color="link"><Link to="/feedingchart">Manage Baby</Link></Button>
     </div> :
     <h2> You are looged out successfully..!!</h2>;
 
