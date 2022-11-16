@@ -16,13 +16,12 @@ import AsyncSelect from 'react-select/async';
 import {logDOM} from "@testing-library/react";
 import {useAuth} from "../hooks/useAuth";
 import {Button, Col, Form, Input, Modal, Popconfirm, Row, Select, Table, Cascader} from "antd";
-import Chat from "../components/Chat";
+import ChatLayoutOuter from "../components/Chat";
 import {Link} from 'react-router-dom';
 import {useParams} from "react-router-dom";
 import {Layout} from "antd";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-import io from "socket.io-client";
 
 const {Content} = Layout;
 
@@ -354,58 +353,20 @@ function ChildTable(props) {
 }
 
 
-function ChatLayout(props) {
 
-    const [showChat, setShowChat] = useState(true);
-
-    const childId = props.childId
-    const userName = props.userName
-    const socket = io.connect("http://localhost:3001");
-    // console.log("草泥马我要渲染")
-    socket.emit("join_room", childId);
-
-    return (
-        <>
-
-            <Layout style={{
-                // backgroundColor: "green",
-                width: "300px",
-                marginLeft: "75%",
-                opacity: showChat ? 1 : 0
-            }}>
-                <Chat socket={socket} username={userName} room="child1"/>
-            </Layout>
-
-            <Button
-                style={{
-                    width: "300px",
-                    marginLeft: "75%",
-                }}
-                type="primary"
-                onClick={() => setShowChat(!showChat)}
-                // onClick={() => console.log(1)}
-            >
-                chat here
-            </Button>
-        </>
-    );
-
-
-}
 
 
 export default function ManageChildPage() {
 
     const {user,child} = useAuth();
     const userId = user["userId"]
-    const userName = user["userName"]
+    const username = user["username"]
+    console.log(username,user);
+    console.log('我可是父亲啊！')
 
     // const childId = child["value"]
     console.log(userId);
     console.log(child);
-
-
-
 
 
 
@@ -417,7 +378,7 @@ export default function ManageChildPage() {
                 </Content>
             </Layout>
             {!!child && (
-                <ChatLayout childId={child["value"]} userName={userName}/>
+                <ChatLayoutOuter childId={child["value"]} username={username}/>
             )}
 
         </>

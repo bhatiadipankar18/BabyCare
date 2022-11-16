@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import "./Chat.css"
+import {Layout} from "antd";
+import io from "socket.io-client";
+import {Button} from "antd";
 
 function Chat({ socket, username, room }) {
 
-    console.log("wocao我chat渲染了");
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
 
@@ -24,6 +27,8 @@ function Chat({ socket, username, room }) {
             setCurrentMessage("");
         }
     };
+
+
 
     useEffect(() => {
         socket.on("receive_message", (data) => {
@@ -76,4 +81,52 @@ function Chat({ socket, username, room }) {
     );
 }
 
-export default Chat;
+
+function ChatLayoutOuter({username,childId}){
+    const socket= io.connect("http://localhost:3001") ;
+    socket.emit("join_room", childId);
+    console.log('我可是父亲啊')
+
+    return(
+        <ChatLayout socket={socket} username={username} childId={childId} />
+    )
+
+
+}
+
+function ChatLayout({socket,username,childId}) {
+
+    const [showChat, setShowChat] = useState(true);
+
+    console.log('我可是儿子啊')
+
+    return (
+        <>
+
+            <Layout style={{
+                // backgroundColor: "green",
+                width: "300px",
+                marginLeft: "75%",
+                opacity: showChat ? 1 : 0
+            }}>
+                <Chat socket={socket} username={username} room={childId}/>
+            </Layout>
+
+            <Button
+                style={{
+                    width: "300px",
+                    marginLeft: "75%",
+                }}
+                type="primary"
+                onClick={() => setShowChat(!showChat)}
+                // onClick={() => console.log(1)}
+            >
+                chat here
+            </Button>
+        </>
+    );
+
+
+}
+
+export default ChatLayoutOuter;
