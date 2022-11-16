@@ -52,6 +52,7 @@ public class UserController {
         Map<String, Object> data = new HashMap<>();
 
         data.put("userId",one.getId());
+        data.put("username",one.getUsername());
         data.put("userRole",one.getRole());
         data.put("token","tokentoken");
         return new Result<>(200,"login success",data);
