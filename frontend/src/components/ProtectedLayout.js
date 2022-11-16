@@ -31,6 +31,7 @@ export const ProtectedLayout = () => {
             <div>
                 <AppBar
                     pages={[
+                        { label: "manageChild_n", path: "manageChild" },
                         { label: "Feeding_n", path: "feeding" },
                         { label: "Poem_n", path: "poemList" }
                     ]}
