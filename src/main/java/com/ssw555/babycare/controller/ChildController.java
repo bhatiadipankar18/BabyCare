@@ -8,6 +8,7 @@ import com.ssw555.babycare.Repo.PoemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class ChildController {
 
 
     @GetMapping("/getChildrenByParentId")
-    public List<Child> getChildByParentId(int parentId){
+    public List<Child> getChildByParentId( int parentId){
         return childRepository.findChildByParentId(parentId);
     }
 

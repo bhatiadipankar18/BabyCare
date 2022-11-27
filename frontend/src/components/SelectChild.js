@@ -4,7 +4,7 @@ import {default as ReactSelect}  from 'react-select';
 import {useState,useEffect} from "react";
 import axios from "axios";
 import {useAuth} from "../hooks/useAuth";
-
+import {request} from "../request";
 export default function BasicSelect() {
     const { user,setUser,child, setChild } = useAuth();
     const [age, setAge] = React.useState('');
@@ -19,9 +19,14 @@ export default function BasicSelect() {
     };
 
     const [menu, setMenu] = useState([]);
-    const getMenusFromParentChild = async () => {
-        const res = await axios.get("http://localhost:8888/getChildrenByParentId", {params})
-            .then((response) => {
+    const getMenusFromParentChild =
+
+         () => {
+            request({
+                url: '/getChildrenByParentId',
+                method: 'GET',
+                params: params
+            }) .then((response) => {
                 const options = []
                 response.data.forEach((eachChild) => {
                     options.push({"value":eachChild.id,"label":eachChild.childName})
@@ -30,6 +35,8 @@ export default function BasicSelect() {
 
                 setMenu(options);
             })
+        // const res = await axios.get("http://localhost:8888/", {params})
+
     };
 
     const getMenusFromNannyChild = async () => {

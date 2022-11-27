@@ -18,7 +18,6 @@ import { ThemeProvider, createTheme } from '@mui/material'
 import { request } from '../request';
 import { useAuth } from "../hooks/useAuth";
 
-import axios from "axios";
 
 function Msg(props) {
     return (
@@ -74,10 +73,13 @@ export default function SignUp() {
         }
 
 
-        axios.post('http://localhost:8888/user/login', register).then(res => {
-            console.log("res222",res);
+        request({
+            url: '/user/login',
+            method: 'POST',
+            data: register
+        }).then(res => {
+            console.log("res33",res);
             if (res.data instanceof Object) {
-
                 console.log(res.data);
                 setMsg(res.data["msg"]);
                 if(res.data["code"]===200){

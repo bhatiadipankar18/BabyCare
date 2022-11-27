@@ -8,6 +8,7 @@ import com.ssw555.babycare.Repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +33,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/register",method = RequestMethod.POST)
-    public Result<Object> register(@RequestBody User user ){
-
+    public Result<Object> register(@RequestBody User user , HttpServletRequest request){
         Optional<User> one = userRepository.findUserByUsername(user.getUsername());
         if (one.isPresent ()) {
             return new Result<>(0, "invalid username", null);

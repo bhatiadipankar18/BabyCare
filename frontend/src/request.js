@@ -10,11 +10,16 @@ export function request(config) {
 
     //interceptors before request
     instance.interceptors.request.use(handle => {
-        console.log("I am making a request！！")
-        console.log(handle)
+        console.log("I am making a request！！",handle.url)
+        if(handle.url==="/user/login"){
+            return handle;
+        }
         //seesionStorage will lost after closing the page
         const token = sessionStorage.getItem("token");
-        handle.headers.Authorization = token;
+        console.log("get token from storage and add it to request head")
+        // handle.headers.Authorization = token;
+        handle.headers.USER_LOGIN_TOKEN = "cao";
+        console.log("handle",handle);
         return handle;
     }, error => {
         return Promise.reject(error);
