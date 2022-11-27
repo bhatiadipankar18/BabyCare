@@ -11,6 +11,7 @@ public class crossConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
+                .exposedHeaders("USER_LOGIN_TOKEN")
                 .allowedOriginPatterns("*") //path allowed
                 .allowedMethods("*") //method name allowed
                 .allowCredentials(true)

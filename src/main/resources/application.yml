@@ -15,3 +15,9 @@ spring:
         hbm2ddl:
           auto: update
 
+jwt:
+  header: "Authorization" #token返回头部
+  tokenPrefix: "Bearer " #token前缀
+  secret: "ssw555" #密钥
+  expireTime: 60 #token有效时间 (分钟) 建议一小时以上
+

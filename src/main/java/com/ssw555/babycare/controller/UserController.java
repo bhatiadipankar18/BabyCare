@@ -3,10 +3,12 @@ package com.ssw555.babycare.controller;
 import com.ssw555.babycare.Entity.Feeding;
 import com.ssw555.babycare.Entity.Result;
 import com.ssw555.babycare.Entity.User;
+import com.ssw555.babycare.JWT.JWTUtils;
 import com.ssw555.babycare.Repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +16,7 @@ import java.util.Optional;
 
 
 @RestController
-
+//@CrossOrigin(origins = "http://localhost:3000",exposedHeaders= String[] {"1","s"})
 public class UserController {
 
     @Autowired
@@ -44,7 +46,7 @@ public class UserController {
 
 
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
-    public Result<Object> login(@RequestBody  User user ){
+    public Result<Object> login(@RequestBody  User user , HttpServletResponse response){
         User one = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
         if (one==null) {
             return new Result<>(0,"check username or password",null);
@@ -55,6 +57,11 @@ public class UserController {
         data.put("username",one.getUsername());
         data.put("userRole",one.getRole());
         data.put("token","tokentoken");
+        String token = JWTUtils.createToken(one.getId().toString());
+        System.out.println(token);
+        response.setHeader(JWTUtils.USER_LOGIN_TOKEN, token);
+//        response.set
+        //todo 前端这里加token
         return new Result<>(200,"login success",data);
 
     }

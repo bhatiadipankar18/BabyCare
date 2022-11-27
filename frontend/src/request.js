@@ -11,6 +11,7 @@ export function request(config) {
     //interceptors before request
     instance.interceptors.request.use(handle => {
         console.log("I am making a request！！")
+        console.log(handle)
         //seesionStorage will lost after closing the page
         const token = sessionStorage.getItem("token");
         handle.headers.Authorization = token;
