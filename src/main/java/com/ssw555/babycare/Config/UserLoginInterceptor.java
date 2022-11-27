@@ -21,14 +21,14 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         //token不存在
         if (token == null || token.equals("")) throw new NullPointerException("请先登录11");
         //验证token
-       /* String sub = JWTUtils.validateToken(token);
+        String sub = JWTUtils.validateToken(token);
         if (sub == null || sub.equals(""))
             throw new NullPointerException("token验证失败11");
         //更新token有效时间 (如果需要更新其实就是产生一个新的token)
         if (JWTUtils.isNeedUpdate(token)){
             String newToken = JWTUtils.createToken(sub);
             response.setHeader(JWTUtils.USER_LOGIN_TOKEN,newToken);
-        }*/
+        }
         return true;
     }
 }

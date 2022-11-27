@@ -15,10 +15,10 @@ export function request(config) {
             return handle;
         }
         //seesionStorage will lost after closing the page
-        const token = sessionStorage.getItem("token");
+        const token = sessionStorage.getItem("USER_LOGIN_TOKEN");
         console.log("get token from storage and add it to request head")
         // handle.headers.Authorization = token;
-        handle.headers.USER_LOGIN_TOKEN = "cao";
+        handle.headers.USER_LOGIN_TOKEN = token;
         console.log("handle",handle);
         return handle;
     }, error => {

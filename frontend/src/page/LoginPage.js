@@ -79,8 +79,10 @@ export default function SignUp() {
             data: register
         }).then(res => {
             console.log("res33",res);
+            //todo session里村
+            console.log(res.headers["user_login_token"]);
+            sessionStorage.setItem("USER_LOGIN_TOKEN",res.headers["user_login_token"]);
             if (res.data instanceof Object) {
-                console.log(res.data);
                 setMsg(res.data["msg"]);
                 if(res.data["code"]===200){
                     console.log(res.data);
