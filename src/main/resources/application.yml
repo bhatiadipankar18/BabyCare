@@ -14,10 +14,17 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         hbm2ddl:
           auto: update
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 jwt:
   header: "Authorization" #token返回头部
   tokenPrefix: "Bearer " #token前缀
   secret: "ssw555" #密钥
   expireTime: 60 #token有效时间 (分钟) 建议一小时以上
+
+
+
 

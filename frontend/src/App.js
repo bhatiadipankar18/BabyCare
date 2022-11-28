@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import HomePage from "./page/HomePage"
 import LoginPage from "./page/LoginPage"
 import RegisterPage from "./page/RegisterPage"
+import UploadFilePage from "./page/UploadFiles"
 
 import PoemPage from "./page/PoemPage"
 import FeedingPage from "./page/FeedingPage"
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/" element={<HomePage />}></Route>
                 <Route path="/login" element={<LoginPage />}></Route>
                 <Route path="/register" element={<RegisterPage />}></Route>
+                <Route path="/test" element={<UploadFilePage />}></Route>
             </Route>
             <Route path="/dashboard" element={<ProtectedLayout />}>
                 <Route path="manageChild" element={<ManageChildPage />} />
