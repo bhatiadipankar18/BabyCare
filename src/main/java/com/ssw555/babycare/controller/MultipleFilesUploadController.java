@@ -1,6 +1,11 @@
 package com.ssw555.babycare.controller;
 
+import com.ssw555.babycare.Entity.Poem;
+import com.ssw555.babycare.Entity.User;
+import com.ssw555.babycare.Repo.PoemRepository;
+import com.ssw555.babycare.Repo.UserRepository;
 import com.ssw555.babycare.Utils.FileUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,14 +28,23 @@ import java.util.List;
 @CrossOrigin() // open for all ports
 public class MultipleFilesUploadController {
 
-
+    @Autowired
+    private PoemRepository poemRepository;
     /**
      * Method to upload multiple files
      * @param files
      * @return FileResponse
      */
     @PostMapping("/upload")
-    public ResponseEntity<FileUploadResponse> uploadFiles(@RequestParam("files") MultipartFile[] files) {
+    public ResponseEntity<FileUploadResponse> uploadFiles(@RequestParam("files") MultipartFile[] files,
+                                                          @RequestParam(value="poemId",required = false) int poemId) {
+
+
+        //todo 通过poemId定位到一个poem 然后改它的
+        Poem one = poemRepository.findById(poemId);
+        one.setFileName(files[0].getOriginalFilename());
+        poemRepository.save(one);
+
         try {
             createDirIfNotExist();
 
@@ -55,6 +69,10 @@ public class MultipleFilesUploadController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
                     .body(new FileUploadResponse("Exception to upload files!"));
         }
+
+
+
+
     }
 
     /**

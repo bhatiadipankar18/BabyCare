@@ -15,10 +15,13 @@ import axios from "axios";
 import AsyncSelect from 'react-select/async';
 import {logDOM} from "@testing-library/react";
 import {useAuth} from "../hooks/useAuth";
-import {Button, Col, Form, Input, Modal, Popconfirm, Row, Select, Table} from "antd";
+import {Button, Col,Space, Form, Input, Modal, Popconfirm, Row, Select, Table} from "antd";
 import {Link} from 'react-router-dom';
 import {useParams} from "react-router-dom";
 import { Layout } from "antd";
+import UploadFilePage from "./UploadFiles"
+import AudioPlayer from "react-h5-audio-player";
+
 const {  Content } = Layout;
 
 let parentId;
@@ -219,15 +222,47 @@ function PoemTable(props) {
             title: 'poemId',
             dataIndex: 'id',
             key: 'id',
+            width: '10%',
         },
         {
+
             title: 'poemName',
             dataIndex: 'poemName',
             key: 'poemName',
+            width: '10%',
+        },
+
+
+
+        {
+            title: 'fileName',
+            dataIndex: 'fileName',
+            key: 'fileName',
+            width: '50%',
+            render: (_, index) =>{
+                console.log(dataSource,index);
+                console.log(dataSource["fileName"]);
+                if(index.fileName!==null){
+                    const musicSrc="http://localhost:8888/music/"+index["fileName"]
+                    return  (
+
+
+                            <AudioPlayer
+                                autoPlay={true}
+                                src={musicSrc}
+                                onPlay={e => console.log("onPlay")}
+                                // other props here
+                            />
+                    )
+                }
+
+            }
+
         },
 
 
         {
+            width: '20%',
             title: 'Operation',
             dataIndex: 'operation',
             key: 'operation',
@@ -238,6 +273,8 @@ function PoemTable(props) {
                         <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(index)}>
                             <Button style={{marginLeft: 5}} size="small" danger type="primary">Delete</Button>
                         </Popconfirm>
+
+
                     </div>
                 ) : null
         }
@@ -287,7 +324,9 @@ function PoemTable(props) {
                 footer={[]}
                 onCancel={() => setIsUpdModalVisible(false)}
             >
-                <PoemForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit}/>
+
+                <UploadFilePage poemId={updVal["id"]}></UploadFilePage>
+                {/*<PoemForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit}/>*/}
             </Modal>
 
             <Table

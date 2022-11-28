@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const UploadFile = () => {
+const UploadFile = ({poemId}) => {
     const [files, setFiles] = useState('');
     //state for checking file size
     const [fileSize, setFileSize] = useState(true);
@@ -31,11 +31,16 @@ const UploadFile = () => {
         for (let i = 0; i < files.length; i++) {
             formData.append(`files`, files[i])
         }
-
+        // let obj1={childId:9,poemName:"hehe",fileName:"xixi"}
+        console.log("poemId",poemId)
+        formData.append(`poemId`, poemId)
         const requestOptions = {
             method: 'POST',
             body: formData
         };
+
+        //独立写一个请求 请求2和1
+        console.log(formData)
         fetch(FILE_UPLOAD_BASE_ENDPOINT + '/upload', requestOptions)
             .then(async response => {
                 const isJson = response.headers.get('content-type')?.includes('application/json');

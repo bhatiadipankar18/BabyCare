@@ -19,6 +19,7 @@ public class Poem {
 
     private Integer childId;
     private String poemName;
+    private String fileName;
 
 
 }
