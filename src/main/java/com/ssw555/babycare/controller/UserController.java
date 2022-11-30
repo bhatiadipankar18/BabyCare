@@ -1,56 +1,68 @@
 package com.ssw555.babycare.controller;
 
+import com.ssw555.babycare.Entity.Feeding;
 import com.ssw555.babycare.Entity.Result;
 import com.ssw555.babycare.Entity.User;
+import com.ssw555.babycare.JWT.JWTUtils;
 import com.ssw555.babycare.Repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 
 @RestController
-
+//@CrossOrigin(origins = "http://localhost:3000",exposedHeaders= String[] {"1","s"})
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping(value = "/user/register",method = RequestMethod.POST)
-    public Result register(@RequestBody Map<String, String> map ) {
-        if (this.userRepository.findByUsername(map.get("email")).isEmpty()) {
-            User user = new User();
-            user.setUsername(map.get("email"));
-            user.setFirstName(map.get("firstName"));
-            user.setLastName(map.get("lastName"));
-            user.setPassword(map.get("password"));
-            user.setUserType(map.get("userType"));
-            this.userRepository.save(user);
 
-            return Result.success(null);
+
+    @GetMapping("/user/findAllNanny")
+    public List<User> findAllNanny(){
+        List<User> res = userRepository.findUserByRole(2);
+        return  res;
+
+    }
+
+    @RequestMapping(value = "/user/register",method = RequestMethod.POST)
+    public Result<Object> register(@RequestBody User user , HttpServletRequest request){
+        Optional<User> one = userRepository.findUserByUsername(user.getUsername());
+        if (one.isPresent ()) {
+            return new Result<>(0, "invalid username", null);
         }
 
-        return Result.fail(1, "User with username already exists. Please create another username.");
+        User save = userRepository.save(user);
+        return new Result<>(200, "success", null);
+
     }
 
 
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
-    public Result login(@RequestBody Map<String, String> map ){
-        List<User> save = userRepository.findByUsername(map.get("email"));
-
-        if (save.isEmpty()) {
-            return Result.fail(2, "User does not exists. Please register.");
+    public Result<Object> login(@RequestBody  User user , HttpServletResponse response){
+        User one = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+        if (one==null) {
+            return new Result<>(0,"check username or password",null);
         }
+        Map<String, Object> data = new HashMap<>();
 
-        //Check if password is same
-        if (!save.get(0).getPassword().equals(map.get("password"))) {
-            return Result.fail(3, "Password does not match. Please try again.");
-        }
-        return Result.success(save.get(0));
+        data.put("userId",one.getId());
+        data.put("username",one.getUsername());
+        data.put("userRole",one.getRole());
+        data.put("token","tokentoken");
+        String token = JWTUtils.createToken(one.getId().toString());
+        System.out.println(token);
+        response.setHeader(JWTUtils.USER_LOGIN_TOKEN, token);
+//        response.set
+        //todo 前端这里加token
+        return new Result<>(200,"login success",data);
 
     }
 }

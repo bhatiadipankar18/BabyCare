@@ -10,18 +10,17 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Child {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    private String username;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private Integer role;
+    private String childName;
+    private Integer parentId;
+    private Integer nannyId;
+
 
 
 }

@@ -5,12 +5,13 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class CORSConfiguration implements WebMvcConfigurer {
+public class crossConfiguration implements WebMvcConfigurer {
 
     //配置跨域问题
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
+                .exposedHeaders("USER_LOGIN_TOKEN")
                 .allowedOriginPatterns("*") //path allowed
                 .allowedMethods("*") //method name allowed
                 .allowCredentials(true)
