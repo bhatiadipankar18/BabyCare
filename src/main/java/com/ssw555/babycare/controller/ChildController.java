@@ -16,8 +16,6 @@ import java.util.List;
 public class ChildController {
 
 
-
-
     @Autowired
     private ChildRepository childRepository;
 
@@ -45,7 +43,9 @@ public class ChildController {
     @PutMapping("/child/update")
     public String update(@RequestBody Child child) {
 
+
         Child result = childRepository.save(child);
+
         if(result != null) {
             return "success";
         } else {
@@ -57,13 +57,10 @@ public class ChildController {
     @PostMapping("/child/add")
     public Child save(@RequestBody Child child) {
 
+
         Child result = childRepository.save(child);
 
         return result;
 
     }
-
-
-
-
 }

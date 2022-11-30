@@ -22,5 +22,4 @@ public class Child {
     private Integer nannyId;
 
 
-
 }

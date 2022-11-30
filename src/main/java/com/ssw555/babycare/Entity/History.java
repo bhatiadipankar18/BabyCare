@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.DateTimeException;
+//import java.time.DateTimeException;
 import java.util.Date;
 
 @Entity
