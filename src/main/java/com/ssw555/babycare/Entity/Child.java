@@ -13,15 +13,13 @@ import javax.persistence.*;
 public class Child {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    private String childname;
-    private String birthdate;
-    private Integer age;
-    private Integer height;
-    private Integer weight;
+    private String childName;
+    private Integer parentId;
+    private Integer nannyId;
 
 
 }

@@ -1,30 +1,43 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import "antd/dist/antd.css";
+import { Routes, Route } from "react-router-dom"
+import HomePage from "./page/HomePage"
+import LoginPage from "./page/LoginPage"
+import RegisterPage from "./page/RegisterPage"
+import UploadFilePage from "./page/UploadFiles"
+import MusicPage from "./page/MusicPage"
 
-import Register from './page/Register'
-import Login from './page/Login'
-import Home from './page/Home'
-import Feeding from './page/Feeding'
-import history from './page/Feeding_History'
-import Child from './page/Child'
-import NotFound from './page/NotFound'
-import FrontendAuth from "./FrontendAuth";
-import {routerMap} from "./routerMap";
+import PoemPage from "./page/PoemPage"
+import FeedingPage from "./page/FeedingPage"
+import ManageChildPage from "./page/ManageChildPage";
+
+import { ProtectedLayout } from "./components/ProtectedLayout";
+import { HomeLayout } from "./components/HomeLayout";
+import  BasicSelect  from "./components/SelectChild";
+import 'antd/dist/antd.min.css'
+import './APP.css'
 
 function App() {
-  return (
-    <Router>
-      <Switch>
-        {/*<Route  exact path="/"  component={Home}/>*/}
-        {/*<Route path="/register" component={Register} />*/}
-        {/*<Route path="/login" component={Login} />*/}
-        {/*<Route path="/feeding" component={Feeding} />*/}
-        {/*<Route path="/*" component={NotFound} />*/}
-          <FrontendAuth routerConfig={routerMap}/>
 
-      </Switch>
-    </Router>
-  );
+    return (
+        <Routes>
+            <Route path="/" element={<HomeLayout />}>
+                <Route path="/" element={<HomePage />}></Route>
+                <Route path="/login" element={<LoginPage />}></Route>
+                <Route path="/register" element={<RegisterPage />}></Route>
+            </Route>
+            <Route path="/dashboard" element={<ProtectedLayout />}>
+                <Route path="manageChild" element={<ManageChildPage />} />
+                <Route path="feeding" element={<FeedingPage />}></Route>
+                <Route path="poemList" element={<PoemPage />}></Route>
+                <Route path="test" element={<BasicSelect />} />
+                <Route path="upload" element={<UploadFilePage />}></Route>
+                <Route path="music" element={<MusicPage />}></Route>
+
+            </Route>
+        </Routes>
+    );
 }
+
+
+
 
 export default App;

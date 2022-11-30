@@ -1,12 +1,17 @@
 package com.ssw555.babycare.controller;
 
 import com.ssw555.babycare.Entity.Feeding;
+import com.ssw555.babycare.Entity.Poem;
+import com.ssw555.babycare.Entity.Result;
+import com.ssw555.babycare.Entity.User;
 import com.ssw555.babycare.Repo.FeedingRepository;
+import com.ssw555.babycare.Repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 @RestController
 
@@ -14,9 +19,12 @@ public class FeedingController {
 
     @Autowired
     private FeedingRepository feedingRepository;
-    @GetMapping("/feeding/findAll")
-    public List<Feeding> getAllFeedings( ){
-        return  feedingRepository.findAll();
+
+    @GetMapping("/feeding/findByChildId")
+    public List<Feeding> getPoemByChildId(int childId){
+        List<Feeding> res = feedingRepository.findByChildId(childId);
+        return  res;
+
     }
 
     @DeleteMapping("/feeding/deleteById/{id}")
@@ -24,14 +32,27 @@ public class FeedingController {
         feedingRepository.deleteById(id);
     }
 
-    @GetMapping("/feeding/findById/{id}")
-    public Optional<Feeding> findById(@PathVariable("id") Integer id) {
-        return feedingRepository.findById(id);
+    @PutMapping("/feeding/update")
+    public String update(@RequestBody Feeding feeding) {
+
+        Feeding result = feedingRepository.save(feeding);
+        if(result != null) {
+            return "success";
+        } else {
+            return "error";
+        }
+
     }
 
-    @PostMapping("/feeding/addOrUpdate")
+    @PostMapping("/feeding/add")
     public Feeding save(@RequestBody Feeding feeding) {
-        return feedingRepository.save(feeding);
+
+        Feeding result = feedingRepository.save(feeding);
+
+        return result;
+
     }
+
+
 
 }
