@@ -1,6 +1,7 @@
 package com.ssw555.babycare.Config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -18,6 +19,9 @@ public class StateResourceConfigurer implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("/music/**").addResourceLocations("./music/");
+//        String path = ClassUtils.getDefaultClassLoader().getResource("").getPath();
+        String path = System.getProperty("user.dir");
+
+        registry.addResourceHandler("/music/**").addResourceLocations("file:"+path+"/music/");
     }
 }
