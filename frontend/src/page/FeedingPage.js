@@ -308,7 +308,7 @@ function FeedingTable(props) {
                     type="primary"
                     onClick={() => setIsAddModalVisible(true)}
                 >
-                    Add a row
+                    Add a feeding
                 </Button>
             </div>)}
 

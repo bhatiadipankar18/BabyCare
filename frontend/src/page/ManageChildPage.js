@@ -263,6 +263,7 @@ function ChildTable(props) {
             title: 'childId',
             dataIndex: 'id',
             key: 'id',
+            hidden:true
         },
         {
             title: 'childName',
@@ -274,12 +275,14 @@ function ChildTable(props) {
             title: 'nannyId',
             dataIndex: 'nannyId',
             key: 'nannyId',
+            hidden:true
         },
 
         {
             title: 'parentId',
             dataIndex: 'parentId',
             key: 'parentId',
+            hidden:true
         },
 
 
@@ -311,6 +314,46 @@ function ChildTable(props) {
         setIsUpdModalVisible(false)
     }
 
+    if (user["userRole"] === 2) {
+        return (
+            <div className="teacher-list">
+
+
+                {user["userRole"] === 1 && (<div className="add-search-container">
+                    <Button
+                        type="primary"
+                        onClick={() => setIsAddModalVisible(true)}
+                    >
+                        Add a child
+                    </Button>
+                </div>)}
+
+                <Modal
+                    style={{display: "flex", justifyContent: "center"}}
+                    destroyOnClose={true}
+                    title="Add a child"
+                    open={isAddModalVisible}
+                    footer={[]}
+                    onCancel={() => setIsAddModalVisible(false)}
+                >
+                    <ChildForm parentId={props.userId} handleAdd={handleAdd} onAddSubmit={onAddSubmit}/>
+                </Modal>
+
+                <Modal
+                    style={{display: "flex", justifyContent: "center"}}
+                    destroyOnClose={true}
+                    title="Update a feeding"
+                    open={isUpdModalVisible}
+                    footer={[]}
+                    onCancel={() => setIsUpdModalVisible(false)}
+                >
+                    <ChildForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit}/>
+                </Modal>
+
+
+            </div>
+        )
+    }
     return (
         <div className="teacher-list">
 
@@ -320,14 +363,14 @@ function ChildTable(props) {
                     type="primary"
                     onClick={() => setIsAddModalVisible(true)}
                 >
-                    Add a row
+                    Add a child
                 </Button>
             </div>)}
 
             <Modal
                 style={{display: "flex", justifyContent: "center"}}
                 destroyOnClose={true}
-                title="Add a poemmmmmm"
+                title="Add a child"
                 open={isAddModalVisible}
                 footer={[]}
                 onCancel={() => setIsAddModalVisible(false)}
@@ -347,7 +390,8 @@ function ChildTable(props) {
             </Modal>
 
             <Table
-                columns={columns}
+                columns={columns.filter(item => !item.hidden)}
+
                 rowKey={(record) => {
                     return record.id
                 }}

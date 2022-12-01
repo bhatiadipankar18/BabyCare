@@ -301,7 +301,7 @@ function PoemTable(props) {
                     type="primary"
                     onClick={() => setIsAddModalVisible(true)}
                 >
-                    Add a row
+                    Add a poem
                 </Button>
             </div>)}
 

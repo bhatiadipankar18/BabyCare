@@ -88,7 +88,7 @@ export default function SignUp() {
                     console.log(res.data);
                     setUser(res.data["data"]);
                     setOpen(true);
-                    navigate("/dashboard/poemList", { replace: true });
+                    navigate("/dashboard/manageChild", { replace: true });
                 }else{
                     setOpen(true);
                 }
