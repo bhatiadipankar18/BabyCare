@@ -18,6 +18,6 @@ public class StateResourceConfigurer implements WebMvcConfigurer {
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("/music/**").addResourceLocations("file:/home/wxj/IdeaProjects/BabyCare/music/");
+        registry.addResourceHandler("/music/**").addResourceLocations("./music/");
     }
 }
