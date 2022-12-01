@@ -81,9 +81,9 @@ public class JWTUtils {
                     .verify(token.replace(tokenPrefix, ""))
                     .getSubject();
         } catch (TokenExpiredException e){
-            throw new NullPointerException("token已经过期");
+            throw new NullPointerException("token expires");
         } catch (Exception e){
-            throw new NullPointerException("token验证失败");
+            throw new NullPointerException("token fail");
         }
     }
 
@@ -103,7 +103,7 @@ public class JWTUtils {
         } catch (TokenExpiredException e){
             return true;
         } catch (Exception e){
-            throw new NullPointerException("token验证失败");
+            throw new NullPointerException("token fail");
         }
         //如果剩余过期时间少于过期时常的一般时 需要更新
         return (expiresAt.getTime()-System.currentTimeMillis()) < (expireTime>>1);

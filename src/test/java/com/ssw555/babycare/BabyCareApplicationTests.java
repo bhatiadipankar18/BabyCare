@@ -16,4 +16,10 @@ class BabyCareApplicationTests {
         String token = JWTUtils.createToken("1");
     }
 
+
+    @Test
+    void testCreateDuplicatedUserName(){
+        String token = JWTUtils.createToken("1");
+    }
+
 }
