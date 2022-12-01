@@ -38,10 +38,16 @@ public class UserController {
 
 
     @GetMapping("/user/getCaptcha")
-    public ResponseEntity getCaptcha(String phone){
+    public Result<Object> getCaptcha(String phone){
+//        phone="+15519986338";
 
-        phone="+15519986338";
-        Twilio.init("AC9e7113c3577f68f84f5177a0642d396d","80efbc6f671328ee78e67f9cea68a806");
+        List<Captcha> captchaByPhone = captchaRepository.findCaptchaByPhone(phone);
+        if (captchaByPhone.size()!=0) {
+            return new Result<>(0, "bad phone number", null);
+        }
+
+
+        Twilio.init("AC9e7113c3577f68f84f5177a0642d396d","e2bfba6cb572d0eb88f9fbd43724096f");
         String code = String.valueOf(new Random().nextInt(899999) + 100000);
         Message.creator(new PhoneNumber(phone),
                 new PhoneNumber("+16507898126"), code).create();
@@ -52,7 +58,7 @@ public class UserController {
         one.setCode(code);
         captchaRepository.save(one);
 //
-        return new ResponseEntity<String>("Message sent successfully", HttpStatus.OK);
+        return new Result<>(200, "success", null);
 
     }
 

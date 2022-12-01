@@ -71,9 +71,15 @@ export default function SignUp() {
     };
 
     axios.get('http://localhost:8888/user/getCaptcha', {params})
-        .then((rsp) => {
-          console.log()
+        .then((res) => {
+          console.log("res",res)
+          if(res.data.code===0){
+            setMsg(res.data.msg);
+            setOpen(true);
+          }
           //todo set button un click
+
+
         })
         .catch((error) => {
           console.log(error)
