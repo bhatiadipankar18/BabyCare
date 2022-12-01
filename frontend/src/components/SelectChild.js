@@ -32,6 +32,8 @@ export default function BasicSelect() {
                     options.push({"value": eachChild.id, "label": eachChild.childName})
                 })
                 setMenu(options);
+            }).catch(error => {
+                console.log("error",error)
             })
         };
 

@@ -93,7 +93,7 @@ function FeedingForm(props) {
                     <Col span={16}>
                         <FormItem
                             className="milk"
-                            label="milk"
+                            label="quantity"
                             name="milk"
                             rules={[
                                 {
@@ -253,6 +253,7 @@ function FeedingTable(props) {
             title: 'feedingId',
             dataIndex: 'id',
             key: 'id',
+            hidden: true
         },
         {
             title: 'age',
@@ -260,7 +261,7 @@ function FeedingTable(props) {
             key: 'age',
         },
         {
-            title: 'milk',
+            title: 'quantity',
             dataIndex: 'milk',
             key: 'milk',
         },
@@ -334,7 +335,7 @@ function FeedingTable(props) {
             </Modal>
 
             <Table
-                columns={columns}
+                columns={columns.filter(item => !item.hidden)}
                 rowKey={(record) => {
                     return record.id
                 }}
