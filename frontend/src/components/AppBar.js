@@ -125,7 +125,11 @@ export const AppBar = ({ pages }) => {
                         component="div"
                         sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
                     >
+<<<<<<< HEAD
                         Baby Care
+=======
+                        BabyCare
+>>>>>>> 9f1d51e8bd0bf662a2b0d15e460cd00d11e81c24
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
                         {pages?.map((page) => (

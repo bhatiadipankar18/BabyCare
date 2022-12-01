@@ -204,7 +204,7 @@ export default function SignUp() {
                     required
                     fullWidth
                     name="captcha"
-                    label="sms"
+                    label="Enter Code"
                     type="captcha"
                     id="captcha"
 
