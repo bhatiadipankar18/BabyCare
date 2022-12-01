@@ -47,7 +47,7 @@ function Chat({ socket, username, room }) {
                         return (
                             <div
                                 className="message"
-                                id={username === messageContent.author ? "you" : "other"}
+                                id={username === messageContent.author ? "other" : "you"}
                             >
                                 <div>
                                     <div className="message-content">
@@ -85,7 +85,6 @@ function Chat({ socket, username, room }) {
 function ChatLayoutOuter({username,childId}){
     const socket= io.connect("http://localhost:3001") ;
     socket.emit("join_room", childId);
-    console.log('我可是父亲啊')
 
     return(
         <ChatLayout socket={socket} username={username} childId={childId} />
@@ -98,7 +97,6 @@ function ChatLayout({socket,username,childId}) {
 
     const [showChat, setShowChat] = useState(true);
 
-    console.log('我可是儿子啊')
 
     return (
         <>
