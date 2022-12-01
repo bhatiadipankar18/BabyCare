@@ -22,6 +22,7 @@ import {useParams} from "react-router-dom";
 import {Layout} from "antd";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
+import {request} from "../request";
 
 const {Content} = Layout;
 
@@ -184,13 +185,18 @@ function ChildTable(props) {
         const params = {
             parentId: props.userId,
         };
-        axios.get("http://localhost:8888/getChildrenByParentId", {params})
-            .then((rsp) => {
-                setDataSource(rsp.data);
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+
+        request({
+            url: '/getChildrenByParentId',
+            method: 'GET',
+            params: params
+        }).then((rsp) => {
+            setDataSource(rsp.data);
+        })
+
+
+
+
     }, []);
 
     // CRUD -> D
