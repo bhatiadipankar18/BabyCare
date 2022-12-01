@@ -22,8 +22,8 @@ public class UserLoginInterceptor implements HandlerInterceptor {
         if (token == null || token.equals("")) throw new NullPointerException("请先登录11");
         //验证token
         String sub = JWTUtils.validateToken(token);
-        if (sub == null || sub.equals(""))
-            throw new NullPointerException("token验证失败11");
+        if (sub == null || !sub.equals(request.getParameter("parentId")))
+            throw new NullPointerException("bad token");
         //更新token有效时间 (如果需要更新其实就是产生一个新的token)
         if (JWTUtils.isNeedUpdate(token)){
             String newToken = JWTUtils.createToken(sub);
