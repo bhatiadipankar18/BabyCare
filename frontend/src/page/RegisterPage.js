@@ -18,6 +18,7 @@ import Container from '@mui/material/Container';
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import Select from 'react-select'
 import { request } from '../request';
+import axios from "axios";
 
 
 
@@ -52,6 +53,8 @@ export default function SignUp() {
   const [open, setOpen] = React.useState(false);
   const [msg, setMsg] = React.useState(null);
   const [userRole, setUserRole] = React.useState(1);
+  const [phone, setPhone] = React.useState("");
+  const [code, setCode] = React.useState(0);
   const navigate = useNavigate();
 
   const handleClose = (event, reason) => {
@@ -59,6 +62,23 @@ export default function SignUp() {
       return;
     }
     setOpen(false);
+  };
+
+  const getCaptcha = (event) => {
+    event.preventDefault();
+    const params = {
+      phone:phone
+    };
+
+    axios.get('http://localhost:8888/user/getCaptcha', {params})
+        .then((rsp) => {
+          console.log()
+          //todo set button un click
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
   };
 
   const handleSubmit = (event) => {
@@ -69,7 +89,9 @@ export default function SignUp() {
     const register = {
       username: data.get('username'),
       password: data.get('password'),
-     role: userRole
+     role: userRole,
+      phone:phone,
+      code:code
 
     }
 
@@ -141,6 +163,53 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
+
+              <Grid item xs={8} md={8}>
+                <TextField
+                    required
+                    fullWidth
+                    name="phone"
+                    label="phone"
+                    type="phone"
+                    id="phone"
+                    onChange={(event) => {
+                      setPhone(event.target.value)
+                      // console.log()
+                    }}
+                />
+
+
+              </Grid>
+
+              <Grid item xs={6} md={4}>
+                <Button
+                    // type="submit"
+                    onClick={getCaptcha}
+                    fullWidth
+                    variant="contained"
+                >
+                  get verify  sms
+                </Button>
+
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                    required
+                    fullWidth
+                    name="captcha"
+                    label="sms"
+                    type="captcha"
+                    id="captcha"
+
+                    onChange={(event) => {
+                      setCode(event.target.value)
+                      // console.log()
+                    }}
+                />
+              </Grid>
+
+
 
               <Grid item xs={12}>
                 <Select

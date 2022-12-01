@@ -10,18 +10,16 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Captcha {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    private String username;
-    private Integer role;
-    private String password;
     private String phone;
     private String code;
+
 
 
 }
