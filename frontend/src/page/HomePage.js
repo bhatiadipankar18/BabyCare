@@ -10,7 +10,8 @@ class HomePage extends Component {
 
         return (
             <div>
-              I am home
+              
+              Welcome To BabyCare
 
             </div>
         );
