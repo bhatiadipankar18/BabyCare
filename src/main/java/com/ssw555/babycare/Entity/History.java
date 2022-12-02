@@ -24,5 +24,6 @@ public class History {
     private String operation;
     private String object_type;
     private Integer childId;
+    //private Integer child_id;
 
 }

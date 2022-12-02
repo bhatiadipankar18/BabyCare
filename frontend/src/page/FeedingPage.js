@@ -22,7 +22,7 @@ import { Layout } from "antd";
 const {  Content } = Layout;
 
 let parentId;
-
+let originaldata; 
 
 
 
@@ -194,6 +194,7 @@ function FeedingTable(props) {
 
     // CRUD -> D
     const handleDelete = (index) => {
+        originaldata = index;
         axios.delete('http://localhost:8888/feeding/deleteById/' + index.id)
             .then((rsp) => {
                 let tmpData = [...dataSource];
@@ -201,6 +202,15 @@ function FeedingTable(props) {
                 tmpData.splice(i, 1);
                 //  console.log(tmpData)
                 setDataSource(tmpData)
+                let historyObj = {
+                    'historydata':JSON.stringify(originaldata),
+                    'operation': 'delete',
+                    'object_type':'Feeding',
+                    'updated_by': JSON.parse(localStorage.getItem('user')).userId,
+                    'childId': JSON.parse(localStorage.getItem('child')).value,
+                   'updated_on': new Date()
+                                };
+                createHistory(historyObj);
             })
             .catch((error) => {
                 console.log(error)
@@ -228,19 +238,32 @@ function FeedingTable(props) {
                 // replace  item in old dataSource
                 let tmpData = updArrayByItem([...dataSource], value);
                 setDataSource(tmpData);
+                let historyObj = {
+                    'historydata':JSON.stringify(originaldata),
+                    'operation': 'update',
+                    'object_type':'Feeding',
+                    'updated_by': JSON.parse(localStorage.getItem('user')).userId,
+                    'childId': JSON.parse(localStorage.getItem('child')).value,
+                   'updated_on': new Date()
+                                };
+                createHistory(historyObj);
             })
             .catch((error) => {
                 console.log(error)
             })
     }
-
+    const createHistory = (value) => {
+        axios.post('http://localhost:8888/HistoryList/add/', value)
+            .then((rsp) => {
+                console.log('history created'+rsp);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
     const onUpdClick = index => {
-        // handle data format
-        // index.department = [index.department]
-        // index.joinDate = moment(index.joinDate, 'YYYY/MM')
-        // index.gender = [index.gender];
+        originaldata = index;
         let data = index;
-        // console.log("index data: ",index);
         setIsUpdModalVisible(true);
         setUpdVal(data);
     }

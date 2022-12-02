@@ -22,7 +22,7 @@ import { Layout } from "antd";
 const {  Content } = Layout;
 
 let parentId;
-
+let originaldata; 
 const {Option} = Select;
 const FormItem = Form.Item;
 
@@ -172,6 +172,7 @@ function VaccineTable(props) {
 
     // CRUD -> D
     const handleDelete = (index) => {
+        originaldata = index;
         axios.delete('http://localhost:8888/vaccineList/deleteById/' + index.id)
             .then((rsp) => {
                 let tmpData = [...dataSource];
@@ -179,6 +180,15 @@ function VaccineTable(props) {
                 tmpData.splice(i, 1);
                 //  console.log(tmpData)
                 setDataSource(tmpData)
+                let historyObj = {
+                    'historydata':JSON.stringify(originaldata),
+                    'operation': 'delete',
+                    'object_type':'Vaccine',
+                    'updated_by': JSON.parse(localStorage.getItem('user')).userId,
+                    'childId': JSON.parse(localStorage.getItem('child')).value,
+                   'updated_on': new Date()
+                                };
+                createHistory(historyObj);
             })
             .catch((error) => {
                 console.log(error)
@@ -207,12 +217,13 @@ function VaccineTable(props) {
                 let tmpData = updArrayByItem([...dataSource], value);
                 setDataSource(tmpData);
                 let historyObj = {
-                    'historydata':JSON.stringify(value),
+                    'historydata':JSON.stringify(originaldata),
                     'operation': 'update',
                     'object_type':'vaccine',
-                    'updated_by': JSON.parse(localStorage.getItem('user')).userId
-                   
-                };
+                    'updated_by': JSON.parse(localStorage.getItem('user')).userId,
+                    'childId': JSON.parse(localStorage.getItem('child')).value,
+                   'updated_on': new Date()
+                                };
                 createHistory(historyObj);
             })
             .catch((error) => {
@@ -220,7 +231,7 @@ function VaccineTable(props) {
             })
     }
     const createHistory = (value) => {
-        axios.post('http://localhost:8888/vaccineList/add/', value)
+        axios.post('http://localhost:8888/HistoryList/add/', value)
             .then((rsp) => {
                 console.log('history created'+rsp);
             })
@@ -229,6 +240,7 @@ function VaccineTable(props) {
             })
     }
     const onUpdClick = index => {
+        originaldata = index;
         let data = index;
         setIsUpdModalVisible(true);
         setUpdVal(data);

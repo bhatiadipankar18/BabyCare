@@ -107,7 +107,7 @@ function HistoryTable(props) {
             key: 'updated_by',
         },  
         {
-            title: 'operation',
+            title: 'Operation',
             dataIndex: 'operation',
             key: 'operation',
         },
