@@ -20,7 +20,8 @@ export const ProtectedLayout = () => {
                     pages={[
                         { label: "manageChild", path: "manageChild" },
                         { label: "Feeding", path: "feeding" },
-                        { label: "Poem", path: "poemList" }
+                        { label: "Poem", path: "poemList" },
+                        { label: "Vaccine", path: "vaccineList" }
                     ]}
                 />
                 {outlet}
@@ -33,7 +34,8 @@ export const ProtectedLayout = () => {
                     pages={[
                         { label: "manageChild_n", path: "manageChild" },
                         { label: "Feeding_n", path: "feeding" },
-                        { label: "Poem_n", path: "poemList" }
+                        { label: "Poem_n", path: "poemList" },
+                        { label: "Vaccine_n", path: "vaccineList" }
                     ]}
                 />
                 {outlet}

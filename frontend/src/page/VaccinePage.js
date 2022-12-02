@@ -23,14 +23,10 @@ const {  Content } = Layout;
 
 let parentId;
 
-
-
-
 const {Option} = Select;
 const FormItem = Form.Item;
 
-function FeedingForm(props) {
-
+function VaccineForm(props) {
 
     const onFinish = (values) => {
 
@@ -38,6 +34,7 @@ function FeedingForm(props) {
         let data = values;
         if (!props.values) {
             data["childId"] = props.childId;
+
             props.handleAdd(data);
             props.onAddSubmit();
         } else {
@@ -50,7 +47,7 @@ function FeedingForm(props) {
     }
 
     const layout = {
-        labelCol: {span: 4},
+        labelCol: {span: 10},
         wrapperCol: {span: 18},
     };
 
@@ -73,58 +70,37 @@ function FeedingForm(props) {
                 <Row gutter={gutter}>
                     <Col span={16}>
                         <FormItem
-                            className="age"
-                            label="age"
-                            name="age"
+                            className="vaccine_name"
+                            label="vaccine_name"
+                            name="vaccine_name"
                             rules={[
                                 {
                                     required: true,
-                                    message: "please enter age",
+                                    message: "please enter Vaccine Name ",
                                 }
                             ]}
                         >
-                            <Input placeholder="age" allowClear />
+                            <Input placeholder="Vaccine Name" allowClear/>
                         </FormItem>
                     </Col>
-
                 </Row>
-
                 <Row gutter={gutter}>
                     <Col span={16}>
                         <FormItem
-                            className="milk"
-                            label="quantity"
-                            name="milk"
+                            className="vaccine_date"
+                            label="Vaccine Date"
+                            name="vaccine_date"
                             rules={[
                                 {
                                     required: true,
-                                    message: "please enter milk ",
+                                    message: "please enter vaccine details ",
                                 }
                             ]}
                         >
-                            <Input placeholder="24-26 oz. daily 5-8 nursing sessions" allowClear />
+                            <Input placeholder="Vaccine Date" allowClear/>
                         </FormItem>
                     </Col>
                 </Row>
-
-                <Row gutter={gutter}>
-                    <Col span={16}>
-                        <FormItem
-                            className="food"
-                            label="food"
-                            name="food"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "please enter food ",
-                                }
-                            ]}
-                        >
-                            <Input placeholder="food" allowClear />
-                        </FormItem>
-                    </Col>
-                </Row>
-
 
                 <FormItem>
                     <Button style={{width: "650px"}} htmlType="submit" type="primary">
@@ -136,13 +112,15 @@ function FeedingForm(props) {
     )
 }
 
-function FeedingTable(props) {
+function VaccineTable(props) {
 
     // define dataSource && some states
     const [dataSource, setDataSource] = useState([]);
     const [updVal, setUpdVal] = useState([]);
     const [isAddModalVisible, setIsAddModalVisible] = useState(false);
     const [isUpdModalVisible, setIsUpdModalVisible] = useState(false);
+    const [searchText, setSearchText] = useState(undefined);
+    const [searchData, setSearchData] = useState([]);
     const { user } = useAuth();
 
     // utils
@@ -183,7 +161,7 @@ function FeedingTable(props) {
         const params = {
             childId: props.childId,
         };
-        axios.get("http://localhost:8888/feeding/findByChildId", {params})
+        axios.get("http://localhost:8888/vaccineList/findByChildId", {params})
             .then((rsp) => {
                 setDataSource(rsp.data);
             })
@@ -194,7 +172,7 @@ function FeedingTable(props) {
 
     // CRUD -> D
     const handleDelete = (index) => {
-        axios.delete('http://localhost:8888/feeding/deleteById/' + index.id)
+        axios.delete('http://localhost:8888/vaccineList/deleteById/' + index.id)
             .then((rsp) => {
                 let tmpData = [...dataSource];
                 let i = delFromArrayByItemElm(tmpData, index.id);
@@ -209,7 +187,7 @@ function FeedingTable(props) {
 
     // CRUD -> C
     const handleAdd = (value) => {
-        axios.post('http://localhost:8888/feeding/add/', value)
+        axios.post('http://localhost:8888/vaccineList/add/', value)
             .then((rsp) => {
                 let tmpData = [...dataSource];
                 tmpData.push(rsp.data);
@@ -223,54 +201,52 @@ function FeedingTable(props) {
 
     // CRUD -> U
     const handleUpd = (value) => {
-        axios.put('http://localhost:8888/feeding/update/', value)
+        axios.put('http://localhost:8888/vaccineList/update/', value)
             .then((rsp) => {
                 // replace  item in old dataSource
                 let tmpData = updArrayByItem([...dataSource], value);
                 setDataSource(tmpData);
+                let historyObj = {
+                    'historydata':JSON.stringify(value),
+                    'operation': 'update',
+                    'object_type':'vaccine',
+                    'updated_by': JSON.parse(localStorage.getItem('user')).userId
+                   
+                };
+                createHistory(historyObj);
             })
             .catch((error) => {
                 console.log(error)
             })
     }
-
+    const createHistory = (value) => {
+        axios.post('http://localhost:8888/vaccineList/add/', value)
+            .then((rsp) => {
+                console.log('history created'+rsp);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
     const onUpdClick = index => {
-        // handle data format
-        // index.department = [index.department]
-        // index.joinDate = moment(index.joinDate, 'YYYY/MM')
-        // index.gender = [index.gender];
         let data = index;
-        // console.log("index data: ",index);
         setIsUpdModalVisible(true);
         setUpdVal(data);
     }
 
-
-    // table header
     const columns = [
 
+        
         {
-            title: 'feedingId',
-            dataIndex: 'id',
-            key: 'id',
-            hidden: true
+            title: 'Vaccine Name',
+            dataIndex: 'vaccine_name',
+            key: 'vaccine_name',
         },
         {
-            title: 'age',
-            dataIndex: 'age',
-            key: 'age',
+            title: 'Vaccine Date',
+            dataIndex: 'vaccine_date',
+            key: 'vaccine_date',
         },
-        {
-            title: 'quantity',
-            dataIndex: 'milk',
-            key: 'milk',
-        },
-        {
-            title: 'food',
-            dataIndex: 'food',
-            key: 'food',
-        },
-
 
         {
             title: 'Operation',
@@ -287,7 +263,6 @@ function FeedingTable(props) {
                 ) : null
         }
     ]
-    // nanny can not see operations
     if(user["userRole"]===2){
         columns.pop()
     }
@@ -303,39 +278,40 @@ function FeedingTable(props) {
     return (
         <div className="teacher-list">
 
+
             {user["userRole"]===1&& (<div className="add-search-container">
                 <Button
                     type="primary"
                     onClick={() => setIsAddModalVisible(true)}
                 >
-                    Add a feeding
+                    Add a row
                 </Button>
             </div>)}
 
             <Modal
                 style={{display: "flex", justifyContent: "center"}}
                 destroyOnClose={true}
-                title="Add a Feeding"
+                title="Add a Vaccine"
                 open={isAddModalVisible}
                 footer={[]}
                 onCancel={() => setIsAddModalVisible(false)}
             >
-                <FeedingForm childId={props.childId} handleAdd={handleAdd} onAddSubmit={onAddSubmit}/>
+                <VaccineForm childId={props.childId} handleAdd={handleAdd} onAddSubmit={onAddSubmit}/>
             </Modal>
 
             <Modal
                 style={{display: "flex", justifyContent: "center"}}
                 destroyOnClose={true}
-                title="Update a Feeding"
+                title="Update a Vaccine"
                 open={isUpdModalVisible}
                 footer={[]}
                 onCancel={() => setIsUpdModalVisible(false)}
             >
-                <FeedingForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit}/>
+                <VaccineForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit}/>
             </Modal>
 
             <Table
-                columns={columns.filter(item => !item.hidden)}
+                columns={columns}
                 rowKey={(record) => {
                     return record.id
                 }}
@@ -347,19 +323,17 @@ function FeedingTable(props) {
 }
 
 
-export default function FeedingPage() {
+export default function VaccinePage() {
 
     const { child } = useAuth();
 
     if(child){
         return (
-
             <Layout style={{  backgroundColor: "white" }}>
                 <Content style={{ alignSelf: "center" }}>
-                    <FeedingTable childId={parseInt(child["value"])}/>
+                    <VaccineTable childId={parseInt(child["value"])}/>
                 </Content>
             </Layout>
-
         );
     }else{
         return(
