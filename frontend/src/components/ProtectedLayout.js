@@ -21,7 +21,11 @@ export const ProtectedLayout = () => {
                         { label: "manageChild", path: "manageChild" },
                         { label: "Feeding", path: "feeding" },
                         { label: "Poem", path: "poemList" },
-                        { label: "Vaccine", path: "vaccine" }
+                        { label: "Vaccine", path: "vaccine" },
+                        { label: "Medicine", path: "medicineList" },
+                        { label: "Allergy", path: "allergyList" },
+                        { label: "History", path: "HistoryList" }
+
                     ]}
                 />
                 {outlet}
@@ -35,7 +39,10 @@ export const ProtectedLayout = () => {
                         { label: "manageChild_n", path: "manageChild" },
                         { label: "Feeding_n", path: "feeding" },
                         { label: "Poem_n", path: "poemList" },
-                        { label: "Vaccine_n", path: "vaccine" }
+                        { label: "Vaccine_n", path: "vaccine" },
+                        { label: "Medicine_n", path: "MedicineList" },
+                        { label: "Allergy_n", path: "allergyList" }
+
                     ]}
                 />
                 {outlet}

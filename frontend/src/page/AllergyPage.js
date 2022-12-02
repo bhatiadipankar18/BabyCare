@@ -26,7 +26,7 @@ let parentId;
 const {Option} = Select;
 const FormItem = Form.Item;
 
-function MedicineForm(props) {
+function AllergyForm(props) {
 
     const onFinish = (values) => {
 
@@ -70,37 +70,21 @@ function MedicineForm(props) {
                 <Row gutter={gutter}>
                     <Col span={16}>
                         <FormItem
-                            className="medicinename"
-                            label="medicinename"
-                            name="medicinename"
+                            className="details"
+                            label="details"
+                            name="details"
                             rules={[
                                 {
                                     required: true,
-                                    message: "please enter Medicine Name ",
+                                    message: "please enter Allergy details ",
                                 }
                             ]}
                         >
-                            <Input placeholder="medicinename" allowClear/>
+                            <Input placeholder="details" allowClear/>
                         </FormItem>
                     </Col>
                 </Row>
-                <Row gutter={gutter}>
-                    <Col span={16}>
-                        <FormItem
-                            className="timing"
-                            label="timing"
-                            name="timing"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "please enter Medicine details ",
-                                }
-                            ]}
-                        >
-                            <Input placeholder="timing" allowClear/>
-                        </FormItem>
-                    </Col>
-                </Row>
+               
 
                 <FormItem>
                     <Button style={{width: "650px"}} htmlType="submit" type="primary">
@@ -112,7 +96,7 @@ function MedicineForm(props) {
     )
 }
 
-function MedicineTable(props) {
+function AllergyTable(props) {
 
     // define dataSource && some states
     const [dataSource, setDataSource] = useState([]);
@@ -161,7 +145,7 @@ function MedicineTable(props) {
         const params = {
             childId: props.childId,
         };
-        axios.get("http://localhost:8888/medicineList/findByChildId", {params})
+        axios.get("http://localhost:8888/allergyList/findByChildId", {params})
             .then((rsp) => {
                 setDataSource(rsp.data);
             })
@@ -172,7 +156,7 @@ function MedicineTable(props) {
 
     // CRUD -> D
     const handleDelete = (index) => {
-        axios.delete('http://localhost:8888/medicineList/deleteById/' + index.id)
+        axios.delete('http://localhost:8888/allergyList/deleteById/' + index.id)
             .then((rsp) => {
                 let tmpData = [...dataSource];
                 let i = delFromArrayByItemElm(tmpData, index.id);
@@ -187,7 +171,7 @@ function MedicineTable(props) {
 
     // CRUD -> C
     const handleAdd = (value) => {
-        axios.post('http://localhost:8888/medicineList/add/', value)
+        axios.post('http://localhost:8888/allergyList/add/', value)
             .then((rsp) => {
                 let tmpData = [...dataSource];
                 tmpData.push(rsp.data);
@@ -201,7 +185,7 @@ function MedicineTable(props) {
 
     // CRUD -> U
     const handleUpd = (value) => {
-        axios.put('http://localhost:8888/medicineList/update/', value)
+        axios.put('http://localhost:8888/allergyList/update/', value)
             .then((rsp) => {
                 // replace  item in old dataSource
                 let tmpData = updArrayByItem([...dataSource], value);
@@ -209,11 +193,10 @@ function MedicineTable(props) {
                 let historyObj = {
                     'historydata':JSON.stringify(value),
                     'operation': 'update',
-                    'object_type':'medicine',
-                    'updated_by': JSON.parse(localStorage.getItem('user')).userId,
-                    'child_id': JSON.parse(localStorage.getItem('child')).value,
-                   'update_on': new Date()
-                                };
+                    'object_type':'Allergy',
+                    'updated_by': JSON.parse(localStorage.getItem('user')).userId
+                   
+                };
                 createHistory(historyObj);
             })
             .catch((error) => {
@@ -246,15 +229,11 @@ function MedicineTable(props) {
 
         
         {
-            title: 'Medicinename',
-            dataIndex: 'medicinename',
-            key: 'medicinename',
+            title: 'Allergy Details',
+            dataIndex: 'details',
+            key: 'details',
         },
-        {
-            title: 'timing',
-            dataIndex: 'timing',
-            key: 'timing',
-        },
+        
 
         {
             title: 'Operation',
@@ -300,23 +279,23 @@ function MedicineTable(props) {
             <Modal
                 style={{display: "flex", justifyContent: "center"}}
                 destroyOnClose={true}
-                title="Add a Medicine"
+                title="Add a Allergy"
                 open={isAddModalVisible}
                 footer={[]}
                 onCancel={() => setIsAddModalVisible(false)}
             >
-                <MedicineForm childId={props.childId} handleAdd={handleAdd} onAddSubmit={onAddSubmit}/>
+                <AllergyForm childId={props.childId} handleAdd={handleAdd} onAddSubmit={onAddSubmit}/>
             </Modal>
 
             <Modal
                 style={{display: "flex", justifyContent: "center"}}
                 destroyOnClose={true}
-                title="Update a Medicine"
+                title="Update a Allergy"
                 open={isUpdModalVisible}
                 footer={[]}
                 onCancel={() => setIsUpdModalVisible(false)}
             >
-                <MedicineForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit}/>
+                <AllergyForm handleUpd={handleUpd} values={updVal} onUpdSubmit={onUpdSubmit}/>
             </Modal>
 
             <Table
@@ -332,7 +311,7 @@ function MedicineTable(props) {
 }
 
 
-export default function MedicinePage() {
+export default function AllergyPage() {
 
     const { child } = useAuth();
 
@@ -340,16 +319,13 @@ export default function MedicinePage() {
         return (
             <Layout style={{  backgroundColor: "white" }}>
                 <Content style={{ alignSelf: "center" }}>
-                    <MedicineTable childId={parseInt(child["value"])}/>
+                    <AllergyTable childId={parseInt(child["value"])}/>
                 </Content>
             </Layout>
         );
     }else{
         return(
-            <p style={{
-                fontSize:'90px',
-                paddingTop: "15%",
-                "textAlign": "center"}}>   choose your kid</p>
+            "choose your kid"
         )
     }
 

@@ -5,10 +5,16 @@ import RegisterPage from "./page/RegisterPage"
 import UploadFilePage from "./page/UploadFiles"
 import MusicPage from "./page/MusicPage"
 
+import MedicinePage from "./page/MedicinePage"
 import PoemPage from "./page/PoemPage"
 import FeedingPage from "./page/FeedingPage"
 import ManageChildPage from "./page/ManageChildPage";
+
 import VaccinePage from "./page/VaccinePage";
+
+import AllergyPage from "./page/AllergyPage"
+import HistoryPage from "./page/HistoryPage"
+
 
 import { ProtectedLayout } from "./components/ProtectedLayout";
 import { HomeLayout } from "./components/HomeLayout";
@@ -32,7 +38,12 @@ function App() {
                 <Route path="test" element={<BasicSelect />} />
                 <Route path="upload" element={<UploadFilePage />}></Route>
                 <Route path="music" element={<MusicPage />}></Route>
+
                 <Route path="vaccine" element={<VaccinePage />}></Route>
+                <Route path="medicineList" element={<MedicinePage />}></Route>
+                <Route path="allergyList" element={<AllergyPage />}></Route>
+                <Route path="HistoryList" element={<HistoryPage />}></Route>
+
             </Route>
         </Routes>
     );
