@@ -95,7 +95,7 @@ function ChildForm(props) {
 
 
                 <Row gutter={gutter}>
-                    <Col span={16}>
+                    <Col span={22}>
                         <FormItem
                             className="childName"
                             label="childName"
@@ -114,7 +114,7 @@ function ChildForm(props) {
 
                 <Row gutter={gutter}>
 
-                    <Col span={16}>
+                    <Col span={22}>
                         <FormItem
                             className="nannyId"
                             label="nannyName"

@@ -75,7 +75,7 @@ function PoemForm(props) {
 
 
                 <Row gutter={gutter}>
-                    <Col span={16}>
+                    <Col span={22}>
                         <FormItem
                             className="poemName"
                             label="poemName"
@@ -222,14 +222,14 @@ function PoemTable(props) {
             title: 'poemId',
             dataIndex: 'id',
             key: 'id',
-            width: '10%',
+            hidden: true
         },
         {
 
             title: 'poemName',
             dataIndex: 'poemName',
             key: 'poemName',
-            width: '10%',
+            width: '15%',
         },
 
 
@@ -330,7 +330,7 @@ function PoemTable(props) {
             </Modal>
 
             <Table
-                columns={columns}
+                columns={columns.filter(item => !item.hidden)}
                 rowKey={(record) => {
                     return record.id
                 }}
