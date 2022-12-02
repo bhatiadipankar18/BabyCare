@@ -8,6 +8,7 @@ import MusicPage from "./page/MusicPage"
 import PoemPage from "./page/PoemPage"
 import FeedingPage from "./page/FeedingPage"
 import ManageChildPage from "./page/ManageChildPage";
+import VaccinePage from "./page/VaccinePage";
 
 import { ProtectedLayout } from "./components/ProtectedLayout";
 import { HomeLayout } from "./components/HomeLayout";
@@ -31,7 +32,7 @@ function App() {
                 <Route path="test" element={<BasicSelect />} />
                 <Route path="upload" element={<UploadFilePage />}></Route>
                 <Route path="music" element={<MusicPage />}></Route>
-
+                <Route path="vaccine" element={<VaccinePage />}></Route>
             </Route>
         </Routes>
     );
