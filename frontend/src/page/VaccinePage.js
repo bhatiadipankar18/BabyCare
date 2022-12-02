@@ -284,7 +284,7 @@ function VaccineTable(props) {
                     type="primary"
                     onClick={() => setIsAddModalVisible(true)}
                 >
-                    Add a row
+                    Add a vaccine history
                 </Button>
             </div>)}
 

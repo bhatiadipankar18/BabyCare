@@ -319,7 +319,7 @@ function PoemTable(props) {
             <Modal
                 style={{display: "flex", justifyContent: "center"}}
                 destroyOnClose={true}
-                title="Update a feeding"
+                title="Update a poem"
                 open={isUpdModalVisible}
                 footer={[]}
                 onCancel={() => setIsUpdModalVisible(false)}
