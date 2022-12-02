@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
+import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 
 class HomePage extends Component {
@@ -10,7 +9,10 @@ class HomePage extends Component {
 
         return (
             <div>
-              <p> Welcome to BabyCare! </p>
+                <p style={{
+                    fontSize:'90px',
+                    paddingTop: "15%",
+                    "textAlign": "center"}}> Welcome to BabyCare! </p>
             </div>
         );
     }

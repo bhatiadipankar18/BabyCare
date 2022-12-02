@@ -55,6 +55,7 @@ export default function SignUp() {
   const [userRole, setUserRole] = React.useState(1);
   const [phone, setPhone] = React.useState("");
   const [code, setCode] = React.useState(0);
+  const [msgColor, setMsgColor] = React.useState("success");
   const navigate = useNavigate();
 
   const handleClose = (event, reason) => {
@@ -74,6 +75,7 @@ export default function SignUp() {
         .then((res) => {
           console.log("res",res)
           if(res.data.code===0){
+            setMsgColor("error")
             setMsg(res.data.msg);
             setOpen(true);
           }
@@ -113,9 +115,13 @@ export default function SignUp() {
       // good handle
       if (res.data instanceof Object) {
         setMsg(res.data["msg"]);
+        if (res.data.code === 200) {
+          setMsgColor("success")
+        }
         // setOpen(false);
         setOpen(true);
       } else {
+        setMsgColor("error")
         setMsg("unknown error");
         setOpen(true);
       }
@@ -242,7 +248,7 @@ export default function SignUp() {
                   autoHideDuration={3000}
                   onClose={handleClose}
                 >
-                  <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                  <Alert onClose={handleClose} severity={msgColor} sx={{ width: '100%' }}>
                     {msg}
                   </Alert>
                   {/*<Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>*/}
