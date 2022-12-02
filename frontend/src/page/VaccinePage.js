@@ -337,7 +337,11 @@ export default function VaccinePage() {
         );
     }else{
         return(
-            "choose your kid"
+            <p style={{
+                fontSize:'90px',
+                paddingTop: "15%",
+                "textAlign": "center"}}>   choose your kid</p>
+
         )
     }
 

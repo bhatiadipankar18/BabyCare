@@ -118,6 +118,9 @@ export default function SignUp() {
         if (res.data.code === 200) {
           setMsgColor("success")
         }
+        if (res.data.code === 0) {
+          setMsgColor("error")
+        }
         // setOpen(false);
         setOpen(true);
       } else {
