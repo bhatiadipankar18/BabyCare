@@ -35,7 +35,7 @@ export const ProtectedLayout = () => {
                         { label: "manageChild_n", path: "manageChild" },
                         { label: "Feeding_n", path: "feeding" },
                         { label: "Poem_n", path: "poemList" },
-                        { label: "Vaccine_n", path: "vaccineList" }
+                        { label: "Vaccine_n", path: "vaccine" }
                     ]}
                 />
                 {outlet}
